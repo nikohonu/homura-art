@@ -1,0 +1,308 @@
+[[package]]
+name = "appdirs"
+version = "1.4.4"
+description = "A small Python module for determining appropriate platform-specific dirs, e.g. a \"user data dir\"."
+category = "main"
+optional = false
+python-versions = "*"
+
+[[package]]
+name = "black"
+version = "22.10.0"
+description = "The uncompromising code formatter."
+category = "dev"
+optional = false
+python-versions = ">=3.7"
+
+[package.dependencies]
+click = ">=8.0.0"
+mypy-extensions = ">=0.4.3"
+pathspec = ">=0.9.0"
+platformdirs = ">=2"
+tomli = {version = ">=1.1.0", markers = "python_full_version < \"3.11.0a7\""}
+
+[package.extras]
+colorama = ["colorama (>=0.4.3)"]
+d = ["aiohttp (>=3.7.4)"]
+jupyter = ["ipython (>=7.8.0)", "tokenize-rt (>=3.2.0)"]
+uvloop = ["uvloop (>=0.15.2)"]
+
+[[package]]
+name = "click"
+version = "8.1.3"
+description = "Composable command line interface toolkit"
+category = "dev"
+optional = false
+python-versions = ">=3.7"
+
+[package.dependencies]
+colorama = {version = "*", markers = "platform_system == \"Windows\""}
+
+[[package]]
+name = "colorama"
+version = "0.4.6"
+description = "Cross-platform colored terminal text."
+category = "dev"
+optional = false
+python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,!=3.5.*,!=3.6.*,>=2.7"
+
+[[package]]
+name = "isort"
+version = "5.10.1"
+description = "A Python utility / library to sort Python imports."
+category = "dev"
+optional = false
+python-versions = ">=3.6.1,<4.0"
+
+[package.extras]
+colors = ["colorama (>=0.4.3,<0.5.0)"]
+pipfile-deprecated-finder = ["pipreqs", "requirementslib"]
+plugins = ["setuptools"]
+requirements-deprecated-finder = ["pip-api", "pipreqs"]
+
+[[package]]
+name = "mypy-extensions"
+version = "0.4.3"
+description = "Experimental type system extensions for programs checked with the mypy typechecker."
+category = "dev"
+optional = false
+python-versions = "*"
+
+[[package]]
+name = "nodeenv"
+version = "1.7.0"
+description = "Node.js virtual environment builder"
+category = "dev"
+optional = false
+python-versions = ">=2.7,!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,!=3.5.*,!=3.6.*"
+
+[package.dependencies]
+setuptools = "*"
+
+[[package]]
+name = "pathspec"
+version = "0.10.2"
+description = "Utility library for gitignore style pattern matching of file paths."
+category = "dev"
+optional = false
+python-versions = ">=3.7"
+
+[[package]]
+name = "peewee"
+version = "3.15.4"
+description = "a little orm"
+category = "main"
+optional = false
+python-versions = "*"
+
+[[package]]
+name = "pillow-simd"
+version = "9.0.0.post1"
+description = "Python Imaging Library (Fork)"
+category = "main"
+optional = false
+python-versions = ">=3.7"
+
+[[package]]
+name = "platformdirs"
+version = "2.5.4"
+description = "A small Python package for determining appropriate platform-specific dirs, e.g. a \"user data dir\"."
+category = "dev"
+optional = false
+python-versions = ">=3.7"
+
+[package.extras]
+docs = ["furo (>=2022.9.29)", "proselint (>=0.13)", "sphinx (>=5.3)", "sphinx-autodoc-typehints (>=1.19.4)"]
+test = ["appdirs (==1.4.4)", "pytest (>=7.2)", "pytest-cov (>=4)", "pytest-mock (>=3.10)"]
+
+[[package]]
+name = "pyright"
+version = "1.1.279"
+description = "Command line wrapper for pyright"
+category = "dev"
+optional = false
+python-versions = ">=3.7"
+
+[package.dependencies]
+nodeenv = ">=1.6.0"
+
+[package.extras]
+all = ["twine (>=3.4.1)"]
+dev = ["twine (>=3.4.1)"]
+
+[[package]]
+name = "pyside6"
+version = "6.4.0.1"
+description = "Python bindings for the Qt cross-platform application and UI framework"
+category = "main"
+optional = false
+python-versions = "<3.12,>=3.7"
+
+[package.dependencies]
+PySide6-Addons = "6.4.0.1"
+PySide6-Essentials = "6.4.0.1"
+shiboken6 = "6.4.0.1"
+
+[[package]]
+name = "pyside6-addons"
+version = "6.4.0.1"
+description = "Python bindings for the Qt cross-platform application and UI framework (Addons)"
+category = "main"
+optional = false
+python-versions = "<3.12,>=3.7"
+
+[package.dependencies]
+PySide6-Essentials = "6.4.0.1"
+shiboken6 = "6.4.0.1"
+
+[[package]]
+name = "pyside6-essentials"
+version = "6.4.0.1"
+description = "Python bindings for the Qt cross-platform application and UI framework (Essentials)"
+category = "main"
+optional = false
+python-versions = "<3.12,>=3.7"
+
+[package.dependencies]
+shiboken6 = "6.4.0.1"
+
+[[package]]
+name = "setuptools"
+version = "65.5.1"
+description = "Easily download, build, install, upgrade, and uninstall Python packages"
+category = "dev"
+optional = false
+python-versions = ">=3.7"
+
+[package.extras]
+docs = ["furo", "jaraco.packaging (>=9)", "jaraco.tidelift (>=1.4)", "pygments-github-lexers (==0.0.5)", "rst.linker (>=1.9)", "sphinx (>=3.5)", "sphinx-favicon", "sphinx-hoverxref (<2)", "sphinx-inline-tabs", "sphinx-notfound-page (==0.8.3)", "sphinx-reredirects", "sphinxcontrib-towncrier"]
+testing = ["build[virtualenv]", "filelock (>=3.4.0)", "flake8 (<5)", "flake8-2020", "ini2toml[lite] (>=0.9)", "jaraco.envs (>=2.2)", "jaraco.path (>=3.2.0)", "pip (>=19.1)", "pip-run (>=8.8)", "pytest (>=6)", "pytest-black (>=0.3.7)", "pytest-checkdocs (>=2.4)", "pytest-cov", "pytest-enabler (>=1.3)", "pytest-flake8", "pytest-mypy (>=0.9.1)", "pytest-perf", "pytest-timeout", "pytest-xdist", "tomli-w (>=1.0.0)", "virtualenv (>=13.0.0)", "wheel"]
+testing-integration = ["build[virtualenv]", "filelock (>=3.4.0)", "jaraco.envs (>=2.2)", "jaraco.path (>=3.2.0)", "pytest", "pytest-enabler", "pytest-xdist", "tomli", "virtualenv (>=13.0.0)", "wheel"]
+
+[[package]]
+name = "shiboken6"
+version = "6.4.0.1"
+description = "Python/C++ bindings helper module"
+category = "main"
+optional = false
+python-versions = "<3.12,>=3.7"
+
+[[package]]
+name = "tomli"
+version = "2.0.1"
+description = "A lil' TOML parser"
+category = "dev"
+optional = false
+python-versions = ">=3.7"
+
+[metadata]
+lock-version = "1.1"
+python-versions = ">=3.10,<3.12"
+content-hash = "afa090e02e466908d6751ab6752ab6cbc71ceec10186554ea2ff77565fcd6c2d"
+
+[metadata.files]
+appdirs = [
+    {file = "appdirs-1.4.4-py2.py3-none-any.whl", hash = "sha256:a841dacd6b99318a741b166adb07e19ee71a274450e68237b4650ca1055ab128"},
+    {file = "appdirs-1.4.4.tar.gz", hash = "sha256:7d5d0167b2b1ba821647616af46a749d1c653740dd0d2415100fe26e27afdf41"},
+]
+black = [
+    {file = "black-22.10.0-1fixedarch-cp310-cp310-macosx_11_0_x86_64.whl", hash = "sha256:5cc42ca67989e9c3cf859e84c2bf014f6633db63d1cbdf8fdb666dcd9e77e3fa"},
+    {file = "black-22.10.0-1fixedarch-cp311-cp311-macosx_11_0_x86_64.whl", hash = "sha256:5d8f74030e67087b219b032aa33a919fae8806d49c867846bfacde57f43972ef"},
+    {file = "black-22.10.0-1fixedarch-cp37-cp37m-macosx_10_16_x86_64.whl", hash = "sha256:197df8509263b0b8614e1df1756b1dd41be6738eed2ba9e9769f3880c2b9d7b6"},
+    {file = "black-22.10.0-1fixedarch-cp38-cp38-macosx_10_16_x86_64.whl", hash = "sha256:2644b5d63633702bc2c5f3754b1b475378fbbfb481f62319388235d0cd104c2d"},
+    {file = "black-22.10.0-1fixedarch-cp39-cp39-macosx_11_0_x86_64.whl", hash = "sha256:e41a86c6c650bcecc6633ee3180d80a025db041a8e2398dcc059b3afa8382cd4"},
+    {file = "black-22.10.0-cp310-cp310-macosx_11_0_arm64.whl", hash = "sha256:2039230db3c6c639bd84efe3292ec7b06e9214a2992cd9beb293d639c6402edb"},
+    {file = "black-22.10.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:14ff67aec0a47c424bc99b71005202045dc09270da44a27848d534600ac64fc7"},
+    {file = "black-22.10.0-cp310-cp310-win_amd64.whl", hash = "sha256:819dc789f4498ecc91438a7de64427c73b45035e2e3680c92e18795a839ebb66"},
+    {file = "black-22.10.0-cp311-cp311-macosx_11_0_arm64.whl", hash = "sha256:5b9b29da4f564ba8787c119f37d174f2b69cdfdf9015b7d8c5c16121ddc054ae"},
+    {file = "black-22.10.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:b8b49776299fece66bffaafe357d929ca9451450f5466e997a7285ab0fe28e3b"},
+    {file = "black-22.10.0-cp311-cp311-win_amd64.whl", hash = "sha256:21199526696b8f09c3997e2b4db8d0b108d801a348414264d2eb8eb2532e540d"},
+    {file = "black-22.10.0-cp37-cp37m-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:1e464456d24e23d11fced2bc8c47ef66d471f845c7b7a42f3bd77bf3d1789650"},
+    {file = "black-22.10.0-cp37-cp37m-win_amd64.whl", hash = "sha256:9311e99228ae10023300ecac05be5a296f60d2fd10fff31cf5c1fa4ca4b1988d"},
+    {file = "black-22.10.0-cp38-cp38-macosx_11_0_arm64.whl", hash = "sha256:fba8a281e570adafb79f7755ac8721b6cf1bbf691186a287e990c7929c7692ff"},
+    {file = "black-22.10.0-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:915ace4ff03fdfff953962fa672d44be269deb2eaf88499a0f8805221bc68c87"},
+    {file = "black-22.10.0-cp38-cp38-win_amd64.whl", hash = "sha256:444ebfb4e441254e87bad00c661fe32df9969b2bf224373a448d8aca2132b395"},
+    {file = "black-22.10.0-cp39-cp39-macosx_11_0_arm64.whl", hash = "sha256:974308c58d057a651d182208a484ce80a26dac0caef2895836a92dd6ebd725e0"},
+    {file = "black-22.10.0-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:72ef3925f30e12a184889aac03d77d031056860ccae8a1e519f6cbb742736383"},
+    {file = "black-22.10.0-cp39-cp39-win_amd64.whl", hash = "sha256:432247333090c8c5366e69627ccb363bc58514ae3e63f7fc75c54b1ea80fa7de"},
+    {file = "black-22.10.0-py3-none-any.whl", hash = "sha256:c957b2b4ea88587b46cf49d1dc17681c1e672864fd7af32fc1e9664d572b3458"},
+    {file = "black-22.10.0.tar.gz", hash = "sha256:f513588da599943e0cde4e32cc9879e825d58720d6557062d1098c5ad80080e1"},
+]
+click = [
+    {file = "click-8.1.3-py3-none-any.whl", hash = "sha256:bb4d8133cb15a609f44e8213d9b391b0809795062913b383c62be0ee95b1db48"},
+    {file = "click-8.1.3.tar.gz", hash = "sha256:7682dc8afb30297001674575ea00d1814d808d6a36af415a82bd481d37ba7b8e"},
+]
+colorama = [
+    {file = "colorama-0.4.6-py2.py3-none-any.whl", hash = "sha256:4f1d9991f5acc0ca119f9d443620b77f9d6b33703e51011c16baf57afb285fc6"},
+    {file = "colorama-0.4.6.tar.gz", hash = "sha256:08695f5cb7ed6e0531a20572697297273c47b8cae5a63ffc6d6ed5c201be6e44"},
+]
+isort = [
+    {file = "isort-5.10.1-py3-none-any.whl", hash = "sha256:6f62d78e2f89b4500b080fe3a81690850cd254227f27f75c3a0c491a1f351ba7"},
+    {file = "isort-5.10.1.tar.gz", hash = "sha256:e8443a5e7a020e9d7f97f1d7d9cd17c88bcb3bc7e218bf9cf5095fe550be2951"},
+]
+mypy-extensions = [
+    {file = "mypy_extensions-0.4.3-py2.py3-none-any.whl", hash = "sha256:090fedd75945a69ae91ce1303b5824f428daf5a028d2f6ab8a299250a846f15d"},
+    {file = "mypy_extensions-0.4.3.tar.gz", hash = "sha256:2d82818f5bb3e369420cb3c4060a7970edba416647068eb4c5343488a6c604a8"},
+]
+nodeenv = [
+    {file = "nodeenv-1.7.0-py2.py3-none-any.whl", hash = "sha256:27083a7b96a25f2f5e1d8cb4b6317ee8aeda3bdd121394e5ac54e498028a042e"},
+    {file = "nodeenv-1.7.0.tar.gz", hash = "sha256:e0e7f7dfb85fc5394c6fe1e8fa98131a2473e04311a45afb6508f7cf1836fa2b"},
+]
+pathspec = [
+    {file = "pathspec-0.10.2-py3-none-any.whl", hash = "sha256:88c2606f2c1e818b978540f73ecc908e13999c6c3a383daf3705652ae79807a5"},
+    {file = "pathspec-0.10.2.tar.gz", hash = "sha256:8f6bf73e5758fd365ef5d58ce09ac7c27d2833a8d7da51712eac6e27e35141b0"},
+]
+peewee = [
+    {file = "peewee-3.15.4.tar.gz", hash = "sha256:2581520c8dfbacd9d580c2719ae259f0637a9e46eda47dfc0ce01864c6366205"},
+]
+pillow-simd = [
+    {file = "Pillow-SIMD-9.0.0.post1.tar.gz", hash = "sha256:918541cfaa90ba3c0e1bae5da31ba1b1f52b09c0009bd90183b787af4e018263"},
+]
+platformdirs = [
+    {file = "platformdirs-2.5.4-py3-none-any.whl", hash = "sha256:af0276409f9a02373d540bf8480021a048711d572745aef4b7842dad245eba10"},
+    {file = "platformdirs-2.5.4.tar.gz", hash = "sha256:1006647646d80f16130f052404c6b901e80ee4ed6bef6792e1f238a8969106f7"},
+]
+pyright = [
+    {file = "pyright-1.1.279-py3-none-any.whl", hash = "sha256:5eaa6830c0a701dc72586277be98d35762d2c27e01a9c2fbf01ee4e84e785797"},
+    {file = "pyright-1.1.279.tar.gz", hash = "sha256:6f3ac7d12e036e0d1a57c1581d03d781e99b42408b8a6f0ef8ae85bcfe58fa57"},
+]
+pyside6 = [
+    {file = "PySide6-6.4.0.1-cp37-abi3-macosx_10_9_universal2.whl", hash = "sha256:a45ea81fa4d1fdb7aeb7250508b07fa209e6bfb26becf5b24751d3769cade292"},
+    {file = "PySide6-6.4.0.1-cp37-abi3-manylinux_2_28_x86_64.whl", hash = "sha256:90bb074469c37155c69fbfe85d85d23e52973df784bf7bc0d36c646ebdf985a4"},
+    {file = "PySide6-6.4.0.1-cp37-abi3-win_amd64.whl", hash = "sha256:e255f9cb5fa13c4f4c8a1e90f3e6619336787d8700f476b8bb3d432917c68ed6"},
+    {file = "PySide6-6.4.0.1-pp39-pypy39_pp73-macosx_10_9_universal2.whl", hash = "sha256:1821f3f06357961ddf63db1bd73b3d91b5d7a57ce27994bf8ba910a930a411c9"},
+    {file = "PySide6-6.4.0.1-pp39-pypy39_pp73-manylinux_2_28_x86_64.whl", hash = "sha256:ab4f5913cf3a97ed2a5a388b781887e50750142b847e57b52ffa15bb0510af9d"},
+    {file = "PySide6-6.4.0.1-pp39-pypy39_pp73-win_amd64.whl", hash = "sha256:3dae6611f425da55fcc2ed0494496a07812751a89c2f9801f6072a3349106a62"},
+]
+pyside6-addons = [
+    {file = "PySide6_Addons-6.4.0.1-cp37-abi3-macosx_10_9_universal2.whl", hash = "sha256:a9f55608e4b1ff8a35305e2d4341f5f735ad3eafa042dff7381792b84e0c50c8"},
+    {file = "PySide6_Addons-6.4.0.1-cp37-abi3-manylinux_2_28_x86_64.whl", hash = "sha256:fc993a682a290ec63ba3f8b4cf66de8185b076bb6e77756e8d256b643b74cf41"},
+    {file = "PySide6_Addons-6.4.0.1-cp37-abi3-win_amd64.whl", hash = "sha256:ed9653074e33b417ec51dfae4852cbf4aaeda1856ce877f85d58854784baa3dc"},
+    {file = "PySide6_Addons-6.4.0.1-pp39-pypy39_pp73-macosx_10_9_universal2.whl", hash = "sha256:4bcf6e86d53f0ac92092bb66a6a3ee40fa8ff9e46f8418bdec9d6d95256211f4"},
+    {file = "PySide6_Addons-6.4.0.1-pp39-pypy39_pp73-manylinux_2_28_x86_64.whl", hash = "sha256:d5e4f11efc360be8f93cd9a8837019f6ea79cd63e0770c3c2917d7c4b44bc55c"},
+    {file = "PySide6_Addons-6.4.0.1-pp39-pypy39_pp73-win_amd64.whl", hash = "sha256:43d21d7cfb2e507e293cced61b13e1d125212c6b650a61ab97ce7fe9a758008e"},
+]
+pyside6-essentials = [
+    {file = "PySide6_Essentials-6.4.0.1-cp37-abi3-macosx_10_9_universal2.whl", hash = "sha256:7f1d2d3b1aa5f2ababc6a25d0c0748fc41f6aa0d79626f98e0c86d1805928a1a"},
+    {file = "PySide6_Essentials-6.4.0.1-cp37-abi3-manylinux_2_28_x86_64.whl", hash = "sha256:1ba1c475568392db633da032799ff84e4b1c8e0ba863e88118b4f5ae0c312fb1"},
+    {file = "PySide6_Essentials-6.4.0.1-cp37-abi3-win_amd64.whl", hash = "sha256:0c1f968699c4c1d2e131fd5c690228170f764324e6dc0e1b80f978fbc29923de"},
+    {file = "PySide6_Essentials-6.4.0.1-pp39-pypy39_pp73-macosx_10_9_universal2.whl", hash = "sha256:3ea3b8b7bb792ad6a58d1186606ff6a3a782b09007dc4517649fe300d7beaf51"},
+    {file = "PySide6_Essentials-6.4.0.1-pp39-pypy39_pp73-manylinux_2_28_x86_64.whl", hash = "sha256:8cbc5cb78e78f6c2dfe225ce997c198e8a95a19b3f44b8d3ccc14a324d6b6e9c"},
+    {file = "PySide6_Essentials-6.4.0.1-pp39-pypy39_pp73-win_amd64.whl", hash = "sha256:6950ad5d946a61a879634d14cb1bb0205f157b9d270fdc536049d1444aeb14d0"},
+]
+setuptools = [
+    {file = "setuptools-65.5.1-py3-none-any.whl", hash = "sha256:d0b9a8433464d5800cbe05094acf5c6d52a91bfac9b52bcfc4d41382be5d5d31"},
+    {file = "setuptools-65.5.1.tar.gz", hash = "sha256:e197a19aa8ec9722928f2206f8de752def0e4c9fc6953527360d1c36d94ddb2f"},
+]
+shiboken6 = [
+    {file = "shiboken6-6.4.0.1-cp37-abi3-macosx_10_9_universal2.whl", hash = "sha256:491f3394c771e6da85b89ec39394da76b4e11d4ff697250f8ea26f0a08eb2471"},
+    {file = "shiboken6-6.4.0.1-cp37-abi3-manylinux_2_28_x86_64.whl", hash = "sha256:e7f91a1f88ec27b2039df1ea4c92eb89cf7c93d80f93363db66f7a226dad9439"},
+    {file = "shiboken6-6.4.0.1-cp37-abi3-win_amd64.whl", hash = "sha256:8056529749dcad1f0f9b4b1113898de0f39f8b83cd09a38eaf9252f3fef681ad"},
+    {file = "shiboken6-6.4.0.1-pp39-pypy39_pp73-macosx_10_9_universal2.whl", hash = "sha256:3031d769ced7018bcc96cced81e2a79afc5424071fbf819802c48aafe4d2da1d"},
+    {file = "shiboken6-6.4.0.1-pp39-pypy39_pp73-manylinux_2_28_x86_64.whl", hash = "sha256:09f27c7425ecd2ce6debdf7771a56b2fbc36527b6097b3a1b21339c61287f842"},
+    {file = "shiboken6-6.4.0.1-pp39-pypy39_pp73-win_amd64.whl", hash = "sha256:edd3c3abcff8fee7fc6051d0c63a72fcfc1451e0fd60094430d35aa1720000bf"},
+]
+tomli = [
+    {file = "tomli-2.0.1-py3-none-any.whl", hash = "sha256:939de3e7a6161af0c887ef91b7d41a53e7c5a1ca976325f429cb46ea9bc30ecc"},
+    {file = "tomli-2.0.1.tar.gz", hash = "sha256:de526c12914f0c550d15924c62d72abc48d6fe7364aa87328337a31007fe8a4f"},
+]
