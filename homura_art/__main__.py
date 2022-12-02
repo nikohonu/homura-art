@@ -1,21 +1,14 @@
 import sys
 
-from PySide6.QtWidgets import (
-    QApplication,
-    QCheckBox,
-    QHBoxLayout,
-    QLabel,
-    QMainWindow,
-    QPushButton,
-    QTableWidget,
-    QTabWidget,
-    QVBoxLayout,
-    QWidget,
-)
-from homura_art.inbox_tab import InboxTab
-from homura_art.elo_tab import EloTab
+from PySide6.QtWidgets import (QApplication, QCheckBox, QHBoxLayout, QLabel,
+                               QMainWindow, QPushButton, QTableWidget,
+                               QTabWidget, QVBoxLayout, QWidget)
+
 from homura_art.collage_tab import CollageTab
+from homura_art.elo_tab import EloTab
+from homura_art.inbox_tab import InboxTab
 from homura_art.used_tab import UsedTab
+
 
 class MainWindow(QMainWindow):
     def __init__(self) -> None:

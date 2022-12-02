@@ -23,7 +23,6 @@ isort = "^5.10.1"
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
-
 [tool.poetry.scripts]
 homura-art = "homura_art.__main__:main"
 
