@@ -20,8 +20,11 @@ class BaseModel(Model):
         database = database
 
 
-class Art(BaseModel):
-    hash = BlobField()
-    import_time = TimestampField()
+class File(BaseModel):
+    hash = BlobField(unique=True)
+    import_time = TimestampField(null=True)
     rating = IntegerField(default=1000)
     used = BooleanField(default=False)
+
+models = BaseModel.__subclasses__()
+database.create_tables(models)
