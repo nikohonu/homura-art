@@ -26,5 +26,9 @@ class File(BaseModel):
     rating = IntegerField(default=1000)
     used = BooleanField(default=False)
 
+    @property
+    def hash_str(self):
+        return f"{int.from_bytes(self.hash, 'little'):064x}"
+
 models = BaseModel.__subclasses__()
 database.create_tables(models)
