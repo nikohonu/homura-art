@@ -1,33 +1,45 @@
 import os
+import random
 import shutil
+import subprocess
 import sys
 
 from peewee import fn
 from PySide6.QtWidgets import (
     QApplication,
-    QCheckBox,
-    QHBoxLayout,
-    QLabel,
     QMainWindow,
-    QPushButton,
-    QTableWidget,
-    QTabWidget,
-    QVBoxLayout,
-    QWidget,
+    QDialog,
+    QSizePolicy
 )
-from PySide6.QtGui import QPixmap, QPaintEvent, QPainter, QResizeEvent
+from PySide6.QtGui import QPixmap, QResizeEvent
 from PySide6.QtCore import Qt
 
-from homura_art.collage_tab import CollageTab
-from homura_art.elo_tab import EloTab
-from homura_art.inbox_tab import InboxTab
 from homura_art.model import File
 from homura_art.ui.main_window import Ui_MainWindow
-from homura_art.used_tab import UsedTab
+from homura_art.ui.collage_preview import Ui_CollagePreview
 from homura_art.utilities import sync
 import hydrus_api
 
 ACCCESS_KEY = os.environ.get("ACCCESS_KEY", "")
+
+class CollagePreview(QDialog, Ui_CollagePreview):
+    def __init__(self) -> None:
+        super(CollagePreview, self).__init__()
+        self.setupUi(self)
+        self.image = QPixmap("/tmp/collage.png")
+        self.setWindowFlags(Qt.WindowMaximizeButtonHint|Qt.WindowCloseButtonHint)
+
+    def repaint(self):
+        w = self.file.width()
+        h = self.file.height()
+        self.file.setPixmap(
+            self.image.scaled(w, h, aspectMode=Qt.AspectRatioMode.KeepAspectRatio)
+        )
+
+    def resizeEvent(self, event: QResizeEvent) -> None:
+        self.repaint()
+        return super().resizeEvent(event)
+        
 
 
 class MainWindow(QMainWindow, Ui_MainWindow):
@@ -44,6 +56,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.skip_button.clicked.connect(self.get_next)
         self.delete_left_button.clicked.connect(self.delete_left)
         self.delete_right_button.clicked.connect(self.delete_right)
+        self.collage_button.clicked.connect(self.get_collage)
 
 
     def delete(self, file):
@@ -129,6 +142,32 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                     shutil.copyfileobj(response.raw, out_file)
             if ok:
                 return files, pathes
+
+    
+    def get_collage(self):
+        files = list(File.select().where(File.used == False).order_by(File.rating.desc()).limit(10))
+        files = random.sample(files, 3)
+        hashes = list(file.hash_str for file in files)
+        extensions = [data["ext"] for data in self.client.get_file_metadata(hashes)]
+        responses = [self.client.get_file(hash) for hash in hashes]
+        pathes = []
+        for response, extension, name in zip(
+            responses, extensions, ["1", "2", "3"]
+        ):
+            path = f"/tmp/{name}{extension}"
+            pathes.append(path)
+            with open(path, "wb") as out_file:
+                shutil.copyfileobj(response.raw, out_file)
+        cmd = f"montage {' '.join(pathes)} -geometry x1080 -mode Concatenate /tmp/collage.png"
+
+        subprocess.call(cmd, shell=True)
+        
+        if CollagePreview().exec():
+            for file in files:
+                file.used = True
+                file.save()
+        else:
+            print("Cancel!")
 
 
 def main():
