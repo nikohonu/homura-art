@@ -28,7 +28,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
 homura-art = "homura_art.__main__:main"
-ha = "homura_art.cli:sync"
+ha = "homura_art.cli:main"
 
 [tool.isort]
 profile = "black"

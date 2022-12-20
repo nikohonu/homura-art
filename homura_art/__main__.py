@@ -171,15 +171,16 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
 
 def main():
-    if ACCCESS_KEY:
-        sync(ACCCESS_KEY)
-        app = QApplication([])
-        widget = MainWindow()
-        widget.show()
-        widget.resize(1025, 768)
-        sys.exit(app.exec())
-    else:
-        print("Export ACCCESS_KEY before run")
+    pass
+#     if ACCCESS_KEY:
+#         sync(ACCCESS_KEY)
+#         app = QApplication([])
+#         widget = MainWindow()
+#         widget.show()
+#         widget.resize(1025, 768)
+#         sys.exit(app.exec())
+#     else:
+#         print("Export ACCCESS_KEY before run")
 
 
 if __name__ == "__main__":
