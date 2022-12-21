@@ -8,7 +8,7 @@ from PySide6.QtWidgets import (
     QDialog,
     QApplication,
 )
-from PySide6.QtGui import QPixmap, QResizeEvent, QImageReader
+from PySide6.QtGui import QPixmap, QResizeEvent, QImageReader, QShortcut, QKeySequence
 from PySide6.QtCore import Qt
 
 from homura_art.model import File, FilePost, Post
@@ -43,6 +43,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         posts = list(Post.select().where(Post.filtered == False))
         if len(posts) < 24:
             sync()
+            posts = list(Post.select().where(Post.filtered == False))
         # files
         files = list(File.select())
         random.shuffle(files)
@@ -78,6 +79,20 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.right = self.queue.pop()
         self.left_image = QPixmap(self.left["path"])
         self.right_image = QPixmap(self.right["path"])
+
+        self.shortcut_left_win = QShortcut(QKeySequence("A"), self)
+        self.shortcut_right_win = QShortcut(QKeySequence("D"), self)
+        self.shortcut_tie = QShortcut(QKeySequence("W"), self)
+        self.shortcut_delete_left = QShortcut(QKeySequence("Q"), self)
+        self.shortcut_delete_right = QShortcut(QKeySequence("E"), self)
+        self.shortcut_collage_button = QShortcut(QKeySequence("S"), self)
+
+        self.shortcut_left_win.activated.connect(self.left_win)
+        self.shortcut_right_win.activated.connect(self.right_win)
+        self.shortcut_tie.activated.connect(self.tie)
+        self.shortcut_delete_left.activated.connect(self.delete_left)
+        self.shortcut_delete_right.activated.connect(self.delete_right)
+        self.shortcut_collage_button.activated.connect(self.get_collage)
 
         self.left_win_button.clicked.connect(self.left_win)
         self.right_win_button.clicked.connect(self.right_win)

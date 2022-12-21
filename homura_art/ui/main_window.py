@@ -109,13 +109,13 @@ class Ui_MainWindow(object):
 
         self.collage_button = QPushButton(self.central_widget)
         self.collage_button.setObjectName(u"collage_button")
-        self.collage_button.setMinimumSize(QSize(125, 0))
+        self.collage_button.setMinimumSize(QSize(100, 0))
 
         self.horizontalLayout.addWidget(self.collage_button)
 
         self.pushButton = QPushButton(self.central_widget)
         self.pushButton.setObjectName(u"pushButton")
-        self.pushButton.setMinimumSize(QSize(125, 0))
+        self.pushButton.setMinimumSize(QSize(100, 0))
 
         self.horizontalLayout.addWidget(self.pushButton)
 
@@ -142,7 +142,7 @@ class Ui_MainWindow(object):
         self.tie_button.setText(QCoreApplication.translate("MainWindow", u"Tie (W)", None))
         self.right_win_button.setText(QCoreApplication.translate("MainWindow", u"Right win (D)", None))
         self.delete_right_button.setText(QCoreApplication.translate("MainWindow", u"Delete (E)", None))
-        self.collage_button.setText(QCoreApplication.translate("MainWindow", u"Collage (Enter)", None))
+        self.collage_button.setText(QCoreApplication.translate("MainWindow", u"Collage (S)", None))
         self.pushButton.setText(QCoreApplication.translate("MainWindow", u"Undo (Space)", None))
     # retranslateUi
 

@@ -7,3 +7,4 @@
 - hydrus network as source ([#27](https://github.com/nikohonu/shiki-organizer/issues/#27)).
 - Basic gui, that allow rate image by elo.
 - Generate collage button.
+- Add shortcuts ([#6](https://github.com/nikohonu/shiki-organizer/issues/#6)).
