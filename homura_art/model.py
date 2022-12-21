@@ -53,7 +53,7 @@ class File(BaseModel):
     import_time = DateTimeField(default=dt.datetime.now())
     rating = IntegerField(default=1000)
     used = BooleanField(default=False)
-    used_time = TimestampField(null=True)
+    used_time = DateTimeField(null=True)
     ext = TextField()
 
     @property

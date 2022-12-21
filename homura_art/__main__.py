@@ -2,6 +2,7 @@ import random
 import shutil
 import subprocess
 import sys
+import datetime as dt
 
 from PySide6.QtWidgets import (
     QMainWindow,
@@ -23,7 +24,7 @@ class CollagePreview(QDialog, Ui_CollagePreview):
         super(CollagePreview, self).__init__()
         self.setupUi(self)
         self.image = QPixmap("/tmp/collage.png")
-        self.setWindowFlags(Qt.WindowMaximizeButtonHint|Qt.WindowCloseButtonHint)
+        self.setWindowFlags(Qt.WindowMaximizeButtonHint | Qt.WindowCloseButtonHint)
 
     def repaint(self):
         w = self.file.width()
@@ -207,9 +208,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.repaint()
         return super().resizeEvent(event)
 
-
     def get_collage(self):
-        files = list(File.select().where(File.used == False).order_by(File.rating.desc()).limit(16))
+        files = list(
+            File.select()
+            .where(File.used == False)
+            .order_by(File.rating.desc())
+            .limit(16)
+        )
         files = random.sample(files, 3)
         paths = [str(file.path) for file in files]
         cmd = f"montage {' '.join(paths)} -geometry x1080 -mode Concatenate /tmp/collage.png"
@@ -219,6 +224,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         if CollagePreview().exec():
             for file in files:
                 file.used = True
+                file.used_time = dt.datetime.now()
                 file.save()
         else:
             print("Cancel!")
