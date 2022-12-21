@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'main_window.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.4.0
+## Created by: Qt User Interface Compiler version 6.4.1
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -23,7 +23,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(1024, 768)
+        MainWindow.resize(1024, 717)
         self.central_widget = QWidget(MainWindow)
         self.central_widget.setObjectName(u"central_widget")
         sizePolicy = QSizePolicy(QSizePolicy.Maximum, QSizePolicy.Preferred)
@@ -32,72 +32,28 @@ class Ui_MainWindow(object):
         sizePolicy.setHeightForWidth(self.central_widget.sizePolicy().hasHeightForWidth())
         self.central_widget.setSizePolicy(sizePolicy)
         self.verticalLayout = QVBoxLayout(self.central_widget)
+        self.verticalLayout.setSpacing(6)
         self.verticalLayout.setObjectName(u"verticalLayout")
+        self.verticalLayout.setContentsMargins(0, 0, 0, 6)
         self.files_layout = QHBoxLayout()
+        self.files_layout.setSpacing(0)
         self.files_layout.setObjectName(u"files_layout")
-        self.left_layout = QVBoxLayout()
-        self.left_layout.setObjectName(u"left_layout")
-        self.left_control_buttons_layout = QHBoxLayout()
-        self.left_control_buttons_layout.setObjectName(u"left_control_buttons_layout")
-        self.delete_left_button = QPushButton(self.central_widget)
-        self.delete_left_button.setObjectName(u"delete_left_button")
-
-        self.left_control_buttons_layout.addWidget(self.delete_left_button)
-
-        self.safe_left_button = QPushButton(self.central_widget)
-        self.safe_left_button.setObjectName(u"safe_left_button")
-
-        self.left_control_buttons_layout.addWidget(self.safe_left_button)
-
-
-        self.left_layout.addLayout(self.left_control_buttons_layout)
-
         self.left_file = QLabel(self.central_widget)
         self.left_file.setObjectName(u"left_file")
         sizePolicy1 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Expanding)
         sizePolicy1.setHorizontalStretch(0)
-        sizePolicy1.setVerticalStretch(2)
+        sizePolicy1.setVerticalStretch(0)
         sizePolicy1.setHeightForWidth(self.left_file.sizePolicy().hasHeightForWidth())
         self.left_file.setSizePolicy(sizePolicy1)
-        self.left_file.setMinimumSize(QSize(1, 1))
-        self.left_file.setScaledContents(False)
 
-        self.left_layout.addWidget(self.left_file)
-
-
-        self.files_layout.addLayout(self.left_layout)
-
-        self.right_layout = QVBoxLayout()
-        self.right_layout.setObjectName(u"right_layout")
-        self.right_control_buttons_layout = QHBoxLayout()
-        self.right_control_buttons_layout.setObjectName(u"right_control_buttons_layout")
-        self.delete_right_button = QPushButton(self.central_widget)
-        self.delete_right_button.setObjectName(u"delete_right_button")
-
-        self.right_control_buttons_layout.addWidget(self.delete_right_button)
-
-        self.safe_right_button = QPushButton(self.central_widget)
-        self.safe_right_button.setObjectName(u"safe_right_button")
-
-        self.right_control_buttons_layout.addWidget(self.safe_right_button)
-
-
-        self.right_layout.addLayout(self.right_control_buttons_layout)
+        self.files_layout.addWidget(self.left_file)
 
         self.right_file = QLabel(self.central_widget)
         self.right_file.setObjectName(u"right_file")
-        sizePolicy2 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Expanding)
-        sizePolicy2.setHorizontalStretch(0)
-        sizePolicy2.setVerticalStretch(0)
-        sizePolicy2.setHeightForWidth(self.right_file.sizePolicy().hasHeightForWidth())
-        self.right_file.setSizePolicy(sizePolicy2)
-        self.right_file.setMinimumSize(QSize(1, 1))
-        self.right_file.setScaledContents(False)
+        sizePolicy1.setHeightForWidth(self.right_file.sizePolicy().hasHeightForWidth())
+        self.right_file.setSizePolicy(sizePolicy1)
 
-        self.right_layout.addWidget(self.right_file)
-
-
-        self.files_layout.addLayout(self.right_layout)
+        self.files_layout.addWidget(self.right_file)
 
 
         self.verticalLayout.addLayout(self.files_layout)
@@ -108,25 +64,35 @@ class Ui_MainWindow(object):
 
         self.control_buttons_layout.addItem(self.left_spacer)
 
+        self.delete_left_button = QPushButton(self.central_widget)
+        self.delete_left_button.setObjectName(u"delete_left_button")
+        self.delete_left_button.setMinimumSize(QSize(100, 0))
+
+        self.control_buttons_layout.addWidget(self.delete_left_button)
+
         self.left_win_button = QPushButton(self.central_widget)
         self.left_win_button.setObjectName(u"left_win_button")
+        self.left_win_button.setMinimumSize(QSize(100, 0))
 
         self.control_buttons_layout.addWidget(self.left_win_button)
 
         self.tie_button = QPushButton(self.central_widget)
         self.tie_button.setObjectName(u"tie_button")
+        self.tie_button.setMinimumSize(QSize(0, 0))
 
         self.control_buttons_layout.addWidget(self.tie_button)
 
-        self.skip_button = QPushButton(self.central_widget)
-        self.skip_button.setObjectName(u"skip_button")
-
-        self.control_buttons_layout.addWidget(self.skip_button)
-
         self.right_win_button = QPushButton(self.central_widget)
         self.right_win_button.setObjectName(u"right_win_button")
+        self.right_win_button.setMinimumSize(QSize(100, 0))
 
         self.control_buttons_layout.addWidget(self.right_win_button)
+
+        self.delete_right_button = QPushButton(self.central_widget)
+        self.delete_right_button.setObjectName(u"delete_right_button")
+        self.delete_right_button.setMinimumSize(QSize(100, 0))
+
+        self.control_buttons_layout.addWidget(self.delete_right_button)
 
         self.right_spacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
@@ -143,8 +109,15 @@ class Ui_MainWindow(object):
 
         self.collage_button = QPushButton(self.central_widget)
         self.collage_button.setObjectName(u"collage_button")
+        self.collage_button.setMinimumSize(QSize(125, 0))
 
         self.horizontalLayout.addWidget(self.collage_button)
+
+        self.pushButton = QPushButton(self.central_widget)
+        self.pushButton.setObjectName(u"pushButton")
+        self.pushButton.setMinimumSize(QSize(125, 0))
+
+        self.horizontalLayout.addWidget(self.pushButton)
 
         self.horizontalSpacer_2 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
@@ -162,16 +135,14 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
-        self.delete_left_button.setText(QCoreApplication.translate("MainWindow", u"Delete", None))
-        self.safe_left_button.setText(QCoreApplication.translate("MainWindow", u"Safe", None))
-        self.left_file.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.delete_right_button.setText(QCoreApplication.translate("MainWindow", u"Delete", None))
-        self.safe_right_button.setText(QCoreApplication.translate("MainWindow", u"Safe", None))
-        self.right_file.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.left_win_button.setText(QCoreApplication.translate("MainWindow", u"Left win", None))
-        self.tie_button.setText(QCoreApplication.translate("MainWindow", u"Tie", None))
-        self.skip_button.setText(QCoreApplication.translate("MainWindow", u"Skip", None))
-        self.right_win_button.setText(QCoreApplication.translate("MainWindow", u"Right win", None))
-        self.collage_button.setText(QCoreApplication.translate("MainWindow", u"Generate collage", None))
+        self.left_file.setText(QCoreApplication.translate("MainWindow", u"Left", None))
+        self.right_file.setText(QCoreApplication.translate("MainWindow", u"Right", None))
+        self.delete_left_button.setText(QCoreApplication.translate("MainWindow", u"Delete (Q)", None))
+        self.left_win_button.setText(QCoreApplication.translate("MainWindow", u"Left win (A)", None))
+        self.tie_button.setText(QCoreApplication.translate("MainWindow", u"Tie (W)", None))
+        self.right_win_button.setText(QCoreApplication.translate("MainWindow", u"Right win (D)", None))
+        self.delete_right_button.setText(QCoreApplication.translate("MainWindow", u"Delete (E)", None))
+        self.collage_button.setText(QCoreApplication.translate("MainWindow", u"Collage (Enter)", None))
+        self.pushButton.setText(QCoreApplication.translate("MainWindow", u"Undo (Space)", None))
     # retranslateUi
 

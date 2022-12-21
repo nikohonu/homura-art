@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'collage_preview.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.4.0
+## Created by: Qt User Interface Compiler version 6.4.1
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -22,9 +22,10 @@ class Ui_CollagePreview(object):
     def setupUi(self, CollagePreview):
         if not CollagePreview.objectName():
             CollagePreview.setObjectName(u"CollagePreview")
-        CollagePreview.resize(1298, 770)
+        CollagePreview.resize(1298, 760)
         self.verticalLayout = QVBoxLayout(CollagePreview)
         self.verticalLayout.setObjectName(u"verticalLayout")
+        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
         self.file = QLabel(CollagePreview)
         self.file.setObjectName(u"file")
         self.file.setMinimumSize(QSize(1280, 720))

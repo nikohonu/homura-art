@@ -1,9 +1,8 @@
 import click
 
-# from homura_art.model import Post, PostSubscription, Source, Subscription
-from homura_art.model import Post, PostSubscription, Source, Subscription
+from homura_art.model import Source, Subscription
 from peewee import IntegrityError
-import hydrus_api
+from homura_art.utilities import sync
 
 
 @click.group()
@@ -67,52 +66,9 @@ def subscription_list():
         )
 
 
-def process_hydrus_tags(post):
-    pass
-
-
-def process_hydrus_query(subscription):
-    source = subscription.source
-    have = (
-        PostSubscription.select()
-        .join(Post)
-        .where((PostSubscription.subscription == subscription) & (Post.saved == False))
-        .count()
-    )
-    if have >= 100:
-        print(
-            f"id:{subscription.id} {source.address} query:{subscription.query} is ok!"
-        )
-        return
-    client = hydrus_api.Client(source.key, source.address)
-    ids = client.search_files([subscription.query])
-    index = -1
-    while have < 100:
-        index += 1
-        id = ids[index]
-        post, created = Post.get_or_create(index=id, source=source)
-        if created:
-            PostSubscription.create(post=post, subscription=subscription)
-            have += 1
-        if post.saved:
-            continue
-        _, created = PostSubscription.get_or_create(
-            post=post, subscription=subscription
-        )
-        if created:
-            have += 1
-
-
 @click.command()
 def subscription_sync():
-    for subscription in Subscription.select():
-        match subscription.source.source_type:
-            case "hydrus":
-                process_hydrus_query(
-                    subscription,
-                )
-            case _:
-                print("Wrong source type!")
+    sync()
 
 
 cli.add_command(source_add)
@@ -120,6 +76,7 @@ cli.add_command(source_list)
 cli.add_command(subscription_add)
 cli.add_command(subscription_list)
 cli.add_command(subscription_sync)
+cli.add_command(hash)
 
 
 def main():

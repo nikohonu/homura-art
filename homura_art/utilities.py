@@ -1,36 +1,66 @@
-import math
+from pathlib import Path
 
+import hashlib
 import hydrus_api
 
-from homura_art.model import File
+from homura_art.model import Post, PostSubscription, Subscription
 
 
-def sync(acccess_key):
-    data = []
-    client = hydrus_api.Client(acccess_key)
-    hashes = set(client.search_files(["system:everything"], return_hashes=True))
-    existing_hashes = set(
-        [
-            f"{int.from_bytes(file.hash, 'little'):064x}"
-            for file in File.select(File.hash)
-        ]
+def get_hash(path: Path):
+    """ "This function returns the SHA-256 hash
+    of the file passed into it"""
+    h = hashlib.sha256()
+    with path.open("rb") as file:
+        chunk = 0
+        while chunk != b"":
+            chunk = file.read(1024)
+            h.update(chunk)
+    return h.hexdigest()
+
+
+def process_hydrus_query(subscription):
+    source = subscription.source
+    have = (
+        PostSubscription.select()
+        .join(Post)
+        .where(
+            (PostSubscription.subscription == subscription) & (Post.filtered == False)
+        )
+        .count()
     )
-    hashes = list(hashes.difference(existing_hashes))
+    if have >= 100:
+        print(f"id:{subscription.id} {source.address} query:{subscription.query} | ok!")
+        return
+    client = hydrus_api.Client(source.key, source.address)
+    ids = client.search_files([subscription.query])
+    index = -1
+    old = have
+    while have < 100:
+        index += 1
+        id = ids[index]
+        post, created = Post.get_or_create(index=id, source=source)
+        if created:
+            PostSubscription.create(post=post, subscription=subscription)
+            have += 1
+            continue
+        if post.filtered:
+            continue
+        _, created = PostSubscription.get_or_create(
+            post=post, subscription=subscription
+        )
+        if created:
+            have += 1
+    print(
+        f"id:{subscription.id} {source.address} query:{subscription.query} | added {have-old} posts."
+    )
 
-    service = None
-    step = 1000
-    hashes_len = len(hashes)
-    for i in range(math.ceil(len(hashes) / step)):
-        s = i * step
-        e = s + step
-        for file in client.get_file_metadata(hashes[s:e]):
-            if not service:
-                service = next(iter(file["file_services"]["current"]))
-            data.append(
-                (
-                    int(file["hash"], 16).to_bytes(32, "little"),
-                    file["file_services"]["current"][service]["time_imported"],
+
+def sync():
+    for subscription in Subscription.select():
+        match subscription.source.source_type:
+            case "hydrus":
+                process_hydrus_query(
+                    subscription,
                 )
-            )
-        print("step/all", f"{e}/{hashes_len}")
-    File.insert_many(data, fields=[File.hash, File.import_time]).execute()
+            case _:
+                print("Wrong source type!")

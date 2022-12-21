@@ -1,0 +1,27 @@
+{
+  // See https://go.microsoft.com/fwlink/?LinkId=733558
+  // for the documentation about the tasks.json format
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "homura-art",
+      "type": "shell",
+      "command": "poetry run homura-art",
+      "problemMatcher": [],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "ui",
+      "type": "shell",
+      "command": "pyside6-uic homura_art/ui/collage_preview.ui -g python -o homura_art/ui/collage_preview.py; pyside6-uic homura_art/ui/main_window.ui -g python -o homura_art/ui/main_window.py",
+      "problemMatcher": [],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    }
+  ]
+}

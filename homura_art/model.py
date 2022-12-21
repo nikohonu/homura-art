@@ -1,4 +1,5 @@
 from pathlib import Path
+import shutil
 
 from appdirs import user_data_dir
 from peewee import (
@@ -13,6 +14,7 @@ from peewee import (
     CompositeKey,
 )
 import datetime as dt
+import hydrus_api
 
 
 def get_user_data_dir():
@@ -47,11 +49,16 @@ class Tag(BaseModel):
 
 
 class File(BaseModel):
-    hash = TextField()
+    hash = TextField(unique=True)
     import_time = DateTimeField(default=dt.datetime.now())
     rating = IntegerField(default=1000)
     used = BooleanField(default=False)
     used_time = TimestampField(null=True)
+    ext = TextField()
+
+    @property
+    def path(self):
+        return get_user_data_dir() / self.hash[:3] / f"{self.hash}{self.ext}"
 
 
 class FileTag(BaseModel):
@@ -76,7 +83,29 @@ class Subscription(BaseModel):
 class Post(BaseModel):
     source = ForeignKeyField(Source, backref="posts")
     index = IntegerField()
-    saved = BooleanField(default=False)
+    filtered = BooleanField(default=False)
+
+    @property
+    def path(self):
+        source = self.source
+        match source.source_type:
+            case "hydrus":
+                client = hydrus_api.Client(source.key, source.address)
+                allowed_ext = [".png", ".jpg", ".webp"]
+                ext = client.get_file_metadata(file_ids=[self.index])[0]["ext"]
+                if ext not in allowed_ext:
+                    return ""
+                tmp_path = Path("/tmp/homura-art")
+                tmp_path.mkdir(exist_ok=True)
+                path = tmp_path / f"{self.source.id}-{self.index}{ext}"
+                if path.exists():
+                    return path
+                response = client.get_file(file_id=self.index)
+                with open(path, "wb") as file:
+                    shutil.copyfileobj(response.raw, file)
+                return Path
+            case _:
+                return ""
 
     class Meta:
         indexes = ((("source", "index"), True),)
@@ -104,6 +133,10 @@ class PostSubscription(BaseModel):
 
     class Meta:
         primary_key = CompositeKey("post", "subscription")
+
+
+def get_file_path(hash, ext):
+    return get_user_data_dir() / hash[:3] / f"{hash}"
 
 
 models = BaseModel.__subclasses__()
