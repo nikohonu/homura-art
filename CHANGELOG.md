@@ -8,3 +8,6 @@
 - Basic gui, that allow rate image by elo.
 - Generate collage button.
 - Add shortcuts ([#6](https://github.com/nikohonu/shiki-organizer/issues/#6)).
+- Auto unuse files after 180 days ([#21](https://github.com/nikohonu/shiki-organizer/issues/#21)).
+- Significantly improved collage viewing with the addition of its own collage generator instead of using imagemagic ([#31](https://github.com/nikohonu/shiki-organizer/issues/#31)).
+- The "Next" button in the collage view window ([#16](https://github.com/nikohonu/shiki-organizer/issues/#16)).

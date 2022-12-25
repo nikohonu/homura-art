@@ -6,31 +6,13 @@ import sys
 
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QImageReader, QKeySequence, QPixmap, QResizeEvent, QShortcut
-from PySide6.QtWidgets import QApplication, QDialog, QMainWindow
+from PySide6.QtWidgets import QApplication, QMainWindow
 
+from homura_art.collage_preview import CollagePreview
 from homura_art.model import File, FilePost, Post
-from homura_art.ui.collage_preview import Ui_CollagePreview
 from homura_art.ui.main_window import Ui_MainWindow
+from homura_art.ui_helper import shortcut_button_connect
 from homura_art.utilities import get_hash, sync
-
-
-class CollagePreview(QDialog, Ui_CollagePreview):
-    def __init__(self) -> None:
-        super(CollagePreview, self).__init__()
-        self.setupUi(self)
-        self.image = QPixmap("/tmp/collage.png")
-        self.setWindowFlags(Qt.WindowMaximizeButtonHint | Qt.WindowCloseButtonHint)
-
-    def repaint(self):
-        w = self.file.width()
-        h = self.file.height()
-        self.file.setPixmap(
-            self.image.scaled(w, h, aspectMode=Qt.AspectRatioMode.KeepAspectRatio)
-        )
-
-    def resizeEvent(self, event: QResizeEvent) -> None:
-        self.repaint()
-        return super().resizeEvent(event)
 
 
 class MainWindow(QMainWindow, Ui_MainWindow):
@@ -70,9 +52,20 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         random.shuffle(queue)
         return queue
 
+    def unuse_files(self):
+        max_used_time = dt.datetime.now() - dt.timedelta(days=180)
+        print(max_used_time)
+        for file in File.select().where(
+            (File.used == True) & (File.used_time <= max_used_time)
+        ):
+            file.used = False
+            file.used_time = None
+            file.save()
+
     def __init__(self):
         super(MainWindow, self).__init__()
         self.setupUi(self)
+        self.unuse_files()
         self.new_queue = []
         self.queue = self.generate_queue()
         self.left = self.queue.pop()
@@ -85,21 +78,24 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.shortcut_tie = QShortcut(QKeySequence("W"), self)
         self.shortcut_delete_left = QShortcut(QKeySequence("Q"), self)
         self.shortcut_delete_right = QShortcut(QKeySequence("E"), self)
-        self.shortcut_collage_button = QShortcut(QKeySequence("S"), self)
+        self.shortcut_collage = QShortcut(QKeySequence("S"), self)
 
-        self.shortcut_left_win.activated.connect(self.left_win)
-        self.shortcut_right_win.activated.connect(self.right_win)
-        self.shortcut_tie.activated.connect(self.tie)
-        self.shortcut_delete_left.activated.connect(self.delete_left)
-        self.shortcut_delete_right.activated.connect(self.delete_right)
-        self.shortcut_collage_button.activated.connect(self.get_collage)
-
-        self.left_win_button.clicked.connect(self.left_win)
-        self.right_win_button.clicked.connect(self.right_win)
-        self.tie_button.clicked.connect(self.tie)
-        self.delete_left_button.clicked.connect(self.delete_left)
-        self.delete_right_button.clicked.connect(self.delete_right)
-        self.collage_button.clicked.connect(self.get_collage)
+        shortcut_button_connect(
+            self.shortcut_left_win, self.button_left_win, self.left_win
+        )
+        shortcut_button_connect(
+            self.shortcut_right_win, self.button_right_win, self.right_win
+        )
+        shortcut_button_connect(self.shortcut_tie, self.button_tie, self.tie)
+        shortcut_button_connect(
+            self.shortcut_delete_left, self.button_delete_left, self.delete_left
+        )
+        shortcut_button_connect(
+            self.shortcut_delete_right, self.button_delete_right, self.delete_right
+        )
+        shortcut_button_connect(
+            self.shortcut_collage, self.button_collage, self.open_collage
+        )
 
     def delete(self, item):
         if item["type"] == "post":
@@ -207,26 +203,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.repaint()
         return super().resizeEvent(event)
 
-    def get_collage(self):
-        files = list(
-            File.select()
-            .where(File.used == False)
-            .order_by(File.rating.desc())
-            .limit(16)
-        )
-        files = random.sample(files, 3)
-        paths = [str(file.path) for file in files]
-        cmd = f"montage {' '.join(paths)} -geometry x1080 -mode Concatenate /tmp/collage.png"
-
-        subprocess.call(cmd, shell=True)
-
-        if CollagePreview().exec():
-            for file in files:
-                file.used = True
-                file.used_time = dt.datetime.now()
-                file.save()
-        else:
-            print("Cancel!")
+    def open_collage(self):
+        CollagePreview().exec()
 
 
 def main():

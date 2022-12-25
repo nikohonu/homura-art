@@ -16,7 +16,7 @@
     {
       "label": "ui",
       "type": "shell",
-      "command": "pyside6-uic homura_art/ui/collage_preview.ui -g python -o homura_art/ui/collage_preview.py; pyside6-uic homura_art/ui/main_window.ui -g python -o homura_art/ui/main_window.py",
+      "command": "./ui_to_py.sh",
       "problemMatcher": [],
       "group": {
         "kind": "build",
