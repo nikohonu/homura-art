@@ -10,7 +10,7 @@ from PySide6.QtWidgets import QApplication, QMainWindow
 
 from homura_art.collage_preview import CollagePreview
 from homura_art.image import make_collage
-from homura_art.model import File, FilePost, Post
+from homura_art.model import File, FilePost, Log, Post, Source
 from homura_art.ui.main_window import Ui_MainWindow
 from homura_art.ui_helper import shortcut_button_connect
 from homura_art.utilities import get_hash, sync
@@ -78,6 +78,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.shortcut_delete_left = QShortcut(QKeySequence("Q"), self)
         self.shortcut_delete_right = QShortcut(QKeySequence("E"), self)
         self.shortcut_collage = QShortcut(QKeySequence("S"), self)
+        self.shortcut_undo = QShortcut(QKeySequence(Qt.Key.Key_Space), self)
 
         shortcut_button_connect(
             self.shortcut_left_win, self.button_left_win, self.left_win
@@ -95,12 +96,21 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         shortcut_button_connect(
             self.shortcut_collage, self.button_collage, self.open_collage
         )
+        shortcut_button_connect(self.shortcut_undo, self.button_undo, self.undo)
 
-    def delete(self, item):
+    def delete(self, item, position):
+        item_type = item["type"]
         if item["type"] == "post":
+            post_index = item["post"].index
+            source_id = item["post"].source.id
+            rating = 1000
             item["post"].filtered = True
             item["post"].save()
         if item["type"] == "file":
+            fp = FilePost.select().where(FilePost.file == item["file"]).get()
+            post_index = fp.post.index
+            source_id = fp.post.source.id
+            rating = item["file"].rating
             item["file"].delete_instance(recursive=True)
         if not self.queue:
             if len(self.new_queue) >= 2:
@@ -111,19 +121,29 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             print("queue:", len(self.queue), "new queue:", len(self.new_queue))
         item = self.queue.pop()
         print("queue:", len(self.queue), "new queue:", len(self.new_queue))
+        Log.create(
+            action="delete",
+            data={
+                "type": item_type,
+                "position": position,
+                "post_index": post_index,
+                "post_source_id": source_id,
+                "rating": rating,
+            },
+        )
         return item
 
     def delete_left(self):
-        self.left = self.delete(self.left)
+        self.left = self.delete(self.left, "left")
         self.update_images()
 
     def delete_right(self):
-        self.right = self.delete(self.right)
+        self.right = self.delete(self.right, "right")
         self.update_images()
 
-    def archive(self, item):
+    def archive(self, item, rating=1000):
         if item["type"] == "file":
-            return item
+            return item, None
         else:
             hash = get_hash(item["path"])
             file = File.get_or_none(File.hash == hash)
@@ -132,14 +152,14 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 FilePost.create(file=file, post=post)
             else:
                 path = item["path"]
-                file = File.create(hash=hash, ext=path.suffix)
+                file = File.create(hash=hash, ext=path.suffix, rating=rating)
                 new_path = file.path
                 new_path.parent.mkdir(parents=True, exist_ok=True)
                 shutil.move(path, new_path, copy_function=shutil.copy2)
                 FilePost.create(file=file, post=post)
             post.filtered = True
             post.save()
-            return {"path": file.path, "type": "file", "file": file}
+            return {"path": file.path, "type": "file", "file": file}, post
 
     def play(self, rating_a, rating_b, result):
         def get_expected_score(r_a, r_b):
@@ -153,8 +173,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         return result_a, result_b
 
     def win(self, result):
-        self.left = self.archive(self.left)
-        self.right = self.archive(self.right)
+        self.left, left_post = self.archive(self.left)
+        self.right, right_post = self.archive(self.right)
+        left_file_id = self.left["file"].id
+        right_file_id = self.right["file"].id
+        left_file_rating = self.left["file"].rating
+        right_file_rating = self.right["file"].rating
         if result == 1:
             self.new_queue.append(self.left)
         elif result == 0:
@@ -174,6 +198,23 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.left = self.queue.pop()
         self.right = self.queue.pop()
         self.update_images()
+        Log.create(
+            action="win",
+            data={
+                "left": {
+                    "file_id": left_file_id,
+                    "post_index": left_post.index if left_post else None,
+                    "post_source_id": left_post.source.id if left_post else None,
+                    "file_rating": left_file_rating,
+                },
+                "right": {
+                    "file_id": right_file_id,
+                    "post_index": right_post.index if right_post else None,
+                    "post_source_id": right_post.source.id if right_post else None,
+                    "file_rating": right_file_rating,
+                },
+            },
+        )
 
     def left_win(self):
         self.win(1)
@@ -201,6 +242,93 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def open_collage(self):
         CollagePreview().exec()
+
+    def undo(self):
+        def unarchive(file_id, post_index, post_source_id, rating):
+            file = File.get_by_id(file_id)
+            if post_index:
+                FilePost.delete().where(FilePost.file == file).execute()
+                file.delete_instance()
+                post = (
+                    Post.select()
+                    .join(Source)
+                    .where((Post.index == post_index) & (Source.id == post_source_id))
+                    .get()
+                )
+                post.filtered = False
+                post.save()
+                return {"path": post.path, "type": "post", "post": post}
+            else:
+                file.rating = rating
+                file.save()
+                return {"path": file.path, "type": "file", "file": file}
+
+        def undetete(type, post_index, post_source_id, rating):
+            if type == "file":
+                post = (
+                    Post.select()
+                    .join(Source)
+                    .where((Post.index == post_index) & (Source.id == post_source_id))
+                    .get()
+                )
+                return self.archive(
+                    {"path": post.path, "type": "post", "post": post}, rating
+                )[0]
+            else:
+                post = (
+                    Post.select()
+                    .join(Source)
+                    .where((Post.index == post_index) & (Source.id == post_source_id))
+                    .get()
+                )
+                post.filtered = False
+                post.save()
+                return {"path": post.path, "type": "post", "post": post}
+
+        log = Log.select().order_by(Log.id.desc()).get()
+        if log.action == "win":
+            self.queue.append(self.left)
+            self.queue.append(self.right)
+            left = log.data["left"]
+            right = log.data["right"]
+            self.left = unarchive(
+                left["file_id"],
+                left["post_index"],
+                left["post_source_id"],
+                left["file_rating"],
+            )
+            self.right = unarchive(
+                right["file_id"],
+                right["post_index"],
+                right["post_source_id"],
+                right["file_rating"],
+            )
+            if len(self.new_queue) > 0:
+                self.new_queue.pop()
+        if log.action == "delete":
+            data = log.data
+            if data["position"] == "left":
+                self.queue.append(self.left)
+                self.left = undetete(
+                    data["type"],
+                    data["post_index"],
+                    data["post_source_id"],
+                    data["rating"],
+                )
+                print(self.left)
+            else:
+                self.queue.append(self.right)
+                self.right = undetete(
+                    data["type"],
+                    data["post_index"],
+                    data["post_source_id"],
+                    data["rating"],
+                )
+                print(self.right)
+        print(log.data)
+        print("queue:", len(self.queue), "new queue:", len(self.new_queue))
+        self.update_images()
+        log.delete_instance()
 
 
 def main():

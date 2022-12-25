@@ -15,6 +15,7 @@ from peewee import (
     TextField,
     TimestampField,
 )
+from playhouse.sqlite_ext import JSONField
 
 
 def get_user_data_dir():
@@ -104,7 +105,7 @@ class Post(BaseModel):
                 response = client.get_file(file_id=self.index)
                 with open(path, "wb") as file:
                     shutil.copyfileobj(response.raw, file)
-                return Path
+                return path
             case _:
                 return ""
 
@@ -138,6 +139,11 @@ class PostSubscription(BaseModel):
 
 def get_file_path(hash, ext):
     return get_user_data_dir() / hash[:3] / f"{hash}"
+
+
+class Log(BaseModel):
+    action = TextField()
+    data = JSONField()
 
 
 models = BaseModel.__subclasses__()
