@@ -111,7 +111,19 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         )
         shortcut_button_connect(self.shortcut_undo, self.button_undo, self.undo)
 
-    def delete(self, item, position):
+        self.files_count_before = File.select().count()
+        self.update_message()
+
+    def update_message(self):
+        files_count = File.select().count()
+        queue_len = len(self.queue)
+        new_queue_len = len(self.new_queue)
+        queue = f"Queue: {queue_len + 2}"
+        new_queue = f"New queue: {new_queue_len}"
+        files_added = f"New file: {files_count - self.files_count_before}"
+        self.status_bar.showMessage(f"{queue} {new_queue} {files_added}")
+
+    def _delete(self, item, position):
         item_type = item["type"]
         if item["type"] == "post":
             post_index = item["post"].index
@@ -131,9 +143,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 self.new_queue = []
             else:
                 self.queue = self.generate_queue()
-            print("queue:", len(self.queue), "new queue:", len(self.new_queue))
         item = self.queue.pop()
-        print("queue:", len(self.queue), "new queue:", len(self.new_queue))
         Log.create(
             action="delete",
             data={
@@ -144,14 +154,15 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 "rating": rating,
             },
         )
+        self.update_message()
         return item
 
     def delete_left(self):
-        self.left = self.delete(self.left, "left")
+        self.left = self._delete(self.left, "left")
         self.update_images()
 
     def delete_right(self):
-        self.right = self.delete(self.right, "right")
+        self.right = self._delete(self.right, "right")
         self.update_images()
 
     def archive(self, item, rating=1000):
@@ -207,7 +218,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 self.new_queue = []
             else:
                 self.queue = self.generate_queue()
-        print("queue:", len(self.queue), "new queue:", len(self.new_queue))
         self.left = self.queue.pop()
         self.right = self.queue.pop()
         self.update_images()
@@ -228,6 +238,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 },
             },
         )
+        self.update_message()
 
     def left_win(self):
         self.win(1)
@@ -328,7 +339,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                     data["post_source_id"],
                     data["rating"],
                 )
-                print(self.left)
             else:
                 self.queue.append(self.right)
                 self.right = undetete(
@@ -337,11 +347,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                     data["post_source_id"],
                     data["rating"],
                 )
-                print(self.right)
-        print(log.data)
-        print("queue:", len(self.queue), "new queue:", len(self.new_queue))
         self.update_images()
         log.delete_instance()
+        self.update_message()
 
 
 def main():

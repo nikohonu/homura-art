@@ -14,6 +14,7 @@
 - Adaptive image size during rating ([#29](https://github.com/nikohonu/homura-art/issues/29)).
 - Loging and "Undo" button ([#14](https://github.com/nikohonu/homura-art/issues/29)).
 - Allows to make images "safe" in the collage view.
+- Print the information to the status bar.
 ### Fixed
 - Program works even without a "hydrus network".
 - Skip deleted posts from the "hydrus network".
