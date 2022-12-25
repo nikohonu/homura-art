@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1298</width>
-    <height>762</height>
+    <width>1280</width>
+    <height>768</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -41,9 +41,33 @@
    </item>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
+     <property name="leftMargin">
+      <number>6</number>
+     </property>
      <property name="rightMargin">
       <number>6</number>
      </property>
+     <item>
+      <widget class="QPushButton" name="button_1">
+       <property name="text">
+        <string>First is safe (1)</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="button_2">
+       <property name="text">
+        <string>Second is safe (2)</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="button_3">
+       <property name="text">
+        <string>Third is safe (3)</string>
+       </property>
+      </widget>
+     </item>
      <item>
       <widget class="QDialogButtonBox" name="button_box">
        <property name="orientation">

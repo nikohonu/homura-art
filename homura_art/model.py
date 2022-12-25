@@ -56,6 +56,7 @@ class File(BaseModel):
     used = BooleanField(default=False)
     used_time = DateTimeField(null=True)
     ext = TextField()
+    safe_rating = IntegerField(null=True)
 
     @property
     def path(self):

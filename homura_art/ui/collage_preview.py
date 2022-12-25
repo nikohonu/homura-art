@@ -23,7 +23,7 @@ class Ui_CollagePreview(object):
     def setupUi(self, CollagePreview):
         if not CollagePreview.objectName():
             CollagePreview.setObjectName(u"CollagePreview")
-        CollagePreview.resize(1298, 762)
+        CollagePreview.resize(1280, 768)
         self.verticalLayout = QVBoxLayout(CollagePreview)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.verticalLayout.setContentsMargins(0, 0, 0, -1)
@@ -36,7 +36,22 @@ class Ui_CollagePreview(object):
 
         self.horizontalLayout = QHBoxLayout()
         self.horizontalLayout.setObjectName(u"horizontalLayout")
-        self.horizontalLayout.setContentsMargins(-1, -1, 6, -1)
+        self.horizontalLayout.setContentsMargins(6, -1, 6, -1)
+        self.button_1 = QPushButton(CollagePreview)
+        self.button_1.setObjectName(u"button_1")
+
+        self.horizontalLayout.addWidget(self.button_1)
+
+        self.button_2 = QPushButton(CollagePreview)
+        self.button_2.setObjectName(u"button_2")
+
+        self.horizontalLayout.addWidget(self.button_2)
+
+        self.button_3 = QPushButton(CollagePreview)
+        self.button_3.setObjectName(u"button_3")
+
+        self.horizontalLayout.addWidget(self.button_3)
+
         self.button_box = QDialogButtonBox(CollagePreview)
         self.button_box.setObjectName(u"button_box")
         self.button_box.setOrientation(Qt.Horizontal)
@@ -63,6 +78,9 @@ class Ui_CollagePreview(object):
     def retranslateUi(self, CollagePreview):
         CollagePreview.setWindowTitle(QCoreApplication.translate("CollagePreview", u"Dialog", None))
         self.file.setText(QCoreApplication.translate("CollagePreview", u"TextLabel", None))
+        self.button_1.setText(QCoreApplication.translate("CollagePreview", u"First is safe (1)", None))
+        self.button_2.setText(QCoreApplication.translate("CollagePreview", u"Second is safe (2)", None))
+        self.button_3.setText(QCoreApplication.translate("CollagePreview", u"Third is safe (3)", None))
         self.button_next.setText(QCoreApplication.translate("CollagePreview", u"Next (S)", None))
     # retranslateUi
 

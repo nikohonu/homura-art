@@ -12,4 +12,5 @@
 - Significantly improved collage viewing with the addition of its own collage generator instead of using imagemagic ([#30](https://github.com/nikohonu/homura-art/issues/30), [#31](https://github.com/nikohonu/homura-art/issues/31)).
 - The "Next" button in the collage view window ([#16](https://github.com/nikohonu/homura-art/issues/16)).
 - Adaptive image size during rating ([#29](https://github.com/nikohonu/homura-art/issues/29)).
-- Loging and "Undo" button ([#14](https://github.com/nikohonu/homura-art/issues/29)). 
+- Loging and "Undo" button ([#14](https://github.com/nikohonu/homura-art/issues/29)).
+- Allows to make images "safe" in the collage view.
