@@ -1,22 +1,17 @@
+import datetime as dt
 import random
 import shutil
 import subprocess
 import sys
-import datetime as dt
 
-from PySide6.QtWidgets import (
-    QMainWindow,
-    QDialog,
-    QApplication,
-)
-from PySide6.QtGui import QPixmap, QResizeEvent, QImageReader, QShortcut, QKeySequence
 from PySide6.QtCore import Qt
+from PySide6.QtGui import QImageReader, QKeySequence, QPixmap, QResizeEvent, QShortcut
+from PySide6.QtWidgets import QApplication, QDialog, QMainWindow
 
 from homura_art.model import File, FilePost, Post
-from homura_art.ui.main_window import Ui_MainWindow
 from homura_art.ui.collage_preview import Ui_CollagePreview
+from homura_art.ui.main_window import Ui_MainWindow
 from homura_art.utilities import get_hash, sync
-import shutil
 
 
 class CollagePreview(QDialog, Ui_CollagePreview):
@@ -41,11 +36,12 @@ class CollagePreview(QDialog, Ui_CollagePreview):
 class MainWindow(QMainWindow, Ui_MainWindow):
     def generate_queue(self):
         queue = []
-        posts = list(Post.select().where(Post.filtered == False))
+        posts = list(
+            Post.select().where((Post.filtered == False) & (Post.skiped == False))
+        )
         if len(posts) < 24:
             sync()
             posts = list(Post.select().where(Post.filtered == False))
-        # files
         files = list(File.select())
         random.shuffle(files)
         if len(posts) < 24:
@@ -60,10 +56,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 break
         # post
         random.shuffle(posts)
+        # files
         while posts:
             post = posts.pop()
             path = post.path
             if not path:
+                post.skiped = True
+                post.save()
                 continue
             queue.append({"path": post.path, "type": "post", "post": post})
             if len(queue) == 32:

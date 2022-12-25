@@ -1,9 +1,12 @@
-from pathlib import Path
+import datetime as dt
 import shutil
+from pathlib import Path
 
+import hydrus_api
 from appdirs import user_data_dir
 from peewee import (
     BooleanField,
+    CompositeKey,
     DateTimeField,
     ForeignKeyField,
     IntegerField,
@@ -11,10 +14,7 @@ from peewee import (
     SqliteDatabase,
     TextField,
     TimestampField,
-    CompositeKey,
 )
-import datetime as dt
-import hydrus_api
 
 
 def get_user_data_dir():
@@ -84,6 +84,7 @@ class Post(BaseModel):
     source = ForeignKeyField(Source, backref="posts")
     index = IntegerField()
     filtered = BooleanField(default=False)
+    skiped = BooleanField(default=False)
 
     @property
     def path(self):

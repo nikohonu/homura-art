@@ -1,6 +1,6 @@
+import hashlib
 from pathlib import Path
 
-import hashlib
 import hydrus_api
 
 from homura_art.model import Post, PostSubscription, Subscription
@@ -24,7 +24,9 @@ def process_hydrus_query(subscription):
         PostSubscription.select()
         .join(Post)
         .where(
-            (PostSubscription.subscription == subscription) & (Post.filtered == False)
+            (PostSubscription.subscription == subscription)
+            & (Post.filtered == False)
+            & (Post.skiped == False)
         )
         .count()
     )

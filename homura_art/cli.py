@@ -1,7 +1,7 @@
 import click
+from peewee import IntegrityError
 
 from homura_art.model import Source, Subscription
-from peewee import IntegrityError
 from homura_art.utilities import sync
 
 
@@ -76,7 +76,6 @@ cli.add_command(source_list)
 cli.add_command(subscription_add)
 cli.add_command(subscription_list)
 cli.add_command(subscription_sync)
-cli.add_command(hash)
 
 
 def main():
