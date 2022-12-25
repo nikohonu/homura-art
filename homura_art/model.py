@@ -95,7 +95,10 @@ class Post(BaseModel):
             case "hydrus":
                 client = hydrus_api.Client(source.key, source.address)
                 allowed_ext = [".png", ".jpg", ".webp"]
-                ext = client.get_file_metadata(file_ids=[self.index])[0]["ext"]
+                try:
+                    ext = client.get_file_metadata(file_ids=[self.index])[0]["ext"]
+                except hydrus_api.ConnectionError:
+                    raise ConnectionError()
                 if ext not in allowed_ext:
                     return ""
                 tmp_path = Path("/tmp/homura-art")

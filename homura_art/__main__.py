@@ -40,9 +40,16 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         # post
         random.shuffle(posts)
         # files
+        error_count = 0
         while posts:
+            if error_count > 3:
+                break
             post = posts.pop()
-            path = post.path
+            try:
+                path = post.path
+            except ConnectionError:
+                error_count += 1
+                continue
             if not path:
                 post.skiped = True
                 post.save()
@@ -50,6 +57,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             queue.append({"path": post.path, "type": "post", "post": post})
             if len(queue) == 32:
                 break
+        if len(queue) < 32:
+            while files:
+                file = files.pop()
+                queue.append({"path": file.path, "type": "file", "file": file})
+                if len(queue) == 32:
+                    break
         random.shuffle(queue)
         return queue
 
