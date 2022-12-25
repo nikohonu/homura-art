@@ -16,3 +16,4 @@
 - Allows to make images "safe" in the collage view.
 ### Fixed
 - Program works even without a "hydrus network".
+- Skip deleted posts from the "hydrus network".

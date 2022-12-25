@@ -96,7 +96,13 @@ class Post(BaseModel):
                 client = hydrus_api.Client(source.key, source.address)
                 allowed_ext = [".png", ".jpg", ".webp"]
                 try:
-                    ext = client.get_file_metadata(file_ids=[self.index])[0]["ext"]
+                    data = client.get_file_metadata(file_ids=[self.index])[0]
+                    if data["file_services"]["deleted"]:
+                        raise Exception("Fix this, model.py")
+                        self.skiped = True
+                        self.save()
+                        return ""
+                    ext = data["ext"]
                 except hydrus_api.ConnectionError:
                     raise ConnectionError()
                 if ext not in allowed_ext:
