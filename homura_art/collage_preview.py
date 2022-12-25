@@ -31,7 +31,7 @@ class CollagePreview(QDialog, Ui_CollagePreview):
         self.files = random.sample(files, 3)
         for i in reversed(range(1, 4)):
             self.files = self.files[:i]
-            self.image = make_collage(self.files)
+            self.image = make_collage([file.path for file in self.files])
             if self.image:
                 break
         self.repaint()

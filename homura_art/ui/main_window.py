@@ -23,7 +23,8 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(1024, 717)
+        MainWindow.resize(1024, 768)
+        MainWindow.setMinimumSize(QSize(1024, 768))
         self.central_widget = QWidget(MainWindow)
         self.central_widget.setObjectName(u"central_widget")
         sizePolicy = QSizePolicy(QSizePolicy.Maximum, QSizePolicy.Preferred)
@@ -38,24 +39,16 @@ class Ui_MainWindow(object):
         self.files_layout = QHBoxLayout()
         self.files_layout.setSpacing(0)
         self.files_layout.setObjectName(u"files_layout")
-        self.left_file = QLabel(self.central_widget)
-        self.left_file.setObjectName(u"left_file")
+        self.file = QLabel(self.central_widget)
+        self.file.setObjectName(u"file")
         sizePolicy1 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Expanding)
         sizePolicy1.setHorizontalStretch(0)
         sizePolicy1.setVerticalStretch(0)
-        sizePolicy1.setHeightForWidth(self.left_file.sizePolicy().hasHeightForWidth())
-        self.left_file.setSizePolicy(sizePolicy1)
-        self.left_file.setAlignment(Qt.AlignCenter)
+        sizePolicy1.setHeightForWidth(self.file.sizePolicy().hasHeightForWidth())
+        self.file.setSizePolicy(sizePolicy1)
+        self.file.setAlignment(Qt.AlignCenter)
 
-        self.files_layout.addWidget(self.left_file)
-
-        self.right_file = QLabel(self.central_widget)
-        self.right_file.setObjectName(u"right_file")
-        sizePolicy1.setHeightForWidth(self.right_file.sizePolicy().hasHeightForWidth())
-        self.right_file.setSizePolicy(sizePolicy1)
-        self.right_file.setAlignment(Qt.AlignCenter)
-
-        self.files_layout.addWidget(self.right_file)
+        self.files_layout.addWidget(self.file)
 
 
         self.verticalLayout.addLayout(self.files_layout)
@@ -137,8 +130,7 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
-        self.left_file.setText(QCoreApplication.translate("MainWindow", u"Left", None))
-        self.right_file.setText(QCoreApplication.translate("MainWindow", u"Right", None))
+        self.file.setText(QCoreApplication.translate("MainWindow", u"File", None))
         self.button_delete_left.setText(QCoreApplication.translate("MainWindow", u"Delete (Q)", None))
         self.button_left_win.setText(QCoreApplication.translate("MainWindow", u"Left win (A)", None))
         self.button_tie.setText(QCoreApplication.translate("MainWindow", u"Tie (W)", None))

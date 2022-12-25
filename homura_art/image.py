@@ -17,12 +17,12 @@ def calc_resize_by_width(old_size, width):
     return width, height
 
 
-def make_collage(files: list, any_collage_width=False):
+def make_collage(paths: list, any_collage_width=False):
     screen_width, screen_height = QGuiApplication.screens()[0].size().toTuple()
     images = []
     shift = 0
     collage_width = 0
-    for image in [Image.open(file.path) for file in files]:
+    for image in [Image.open(path) for path in paths]:
         size = calc_resize_by_height(image.size, screen_height)
         width, _ = size
         images.append((image, size, shift))

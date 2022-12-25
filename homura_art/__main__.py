@@ -9,6 +9,7 @@ from PySide6.QtGui import QImageReader, QKeySequence, QPixmap, QResizeEvent, QSh
 from PySide6.QtWidgets import QApplication, QMainWindow
 
 from homura_art.collage_preview import CollagePreview
+from homura_art.image import make_collage
 from homura_art.model import File, FilePost, Post
 from homura_art.ui.main_window import Ui_MainWindow
 from homura_art.ui_helper import shortcut_button_connect
@@ -17,6 +18,7 @@ from homura_art.utilities import get_hash, sync
 
 class MainWindow(QMainWindow, Ui_MainWindow):
     def generate_queue(self):
+        self.new_queue = []
         queue = []
         posts = list(
             Post.select().where((Post.filtered == False) & (Post.skiped == False))
@@ -33,7 +35,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         while files:
             file = files.pop()
             queue.append({"path": file.path, "type": "file", "file": file})
-            print(len(queue), need)
             if len(queue) == need:
                 break
         # post
@@ -54,7 +55,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def unuse_files(self):
         max_used_time = dt.datetime.now() - dt.timedelta(days=180)
-        print(max_used_time)
         for file in File.select().where(
             (File.used == True) & (File.used_time <= max_used_time)
         ):
@@ -70,8 +70,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.queue = self.generate_queue()
         self.left = self.queue.pop()
         self.right = self.queue.pop()
-        self.left_image = QPixmap(self.left["path"])
-        self.right_image = QPixmap(self.right["path"])
+        self.update_images()
 
         self.shortcut_left_win = QShortcut(QKeySequence("A"), self)
         self.shortcut_right_win = QShortcut(QKeySequence("D"), self)
@@ -116,13 +115,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def delete_left(self):
         self.left = self.delete(self.left)
-        self.left_image = QPixmap(self.left["path"])
-        self.repaint()
+        self.update_images()
 
     def delete_right(self):
         self.right = self.delete(self.right)
-        self.right_image = QPixmap(self.right["path"])
-        self.repaint()
+        self.update_images()
 
     def archive(self, item):
         if item["type"] == "file":
@@ -176,9 +173,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         print("queue:", len(self.queue), "new queue:", len(self.new_queue))
         self.left = self.queue.pop()
         self.right = self.queue.pop()
-        self.left_image = QPixmap(self.left["path"])
-        self.right_image = QPixmap(self.right["path"])
-        self.repaint()
+        self.update_images()
 
     def left_win(self):
         self.win(1)
@@ -189,14 +184,15 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def tie(self):
         self.win(0.5)
 
+    def update_images(self):
+        self.image = make_collage([self.left["path"], self.right["path"]], True)
+        self.repaint()
+
     def repaint(self):
-        w = self.left_file.width()
-        h = self.left_file.height()
-        self.left_file.setPixmap(
-            self.left_image.scaled(w, h, aspectMode=Qt.AspectRatioMode.KeepAspectRatio)
-        )
-        self.right_file.setPixmap(
-            self.right_image.scaled(w, h, aspectMode=Qt.AspectRatioMode.KeepAspectRatio)
+        w = self.file.width()
+        h = self.file.height()
+        self.file.setPixmap(
+            self.image.scaled(w, h, aspectMode=Qt.AspectRatioMode.KeepAspectRatio)
         )
 
     def resizeEvent(self, event: QResizeEvent) -> None:
