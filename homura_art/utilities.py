@@ -39,6 +39,8 @@ def process_hydrus_query(subscription):
     old = have
     while have < 100:
         index += 1
+        if index >= len(ids):
+            break
         id = ids[index]
         post, created = Post.get_or_create(index=id, source=source)
         if created:

@@ -22,7 +22,7 @@ def get_user_data_dir():
     return Path(user_data_dir("homura-art", "Niko Honu"))
 
 
-database_path = get_user_data_dir() / "data.db"
+database_path = get_user_data_dir() / "database.db"
 database_path.parent.mkdir(parents=True, exist_ok=True)
 database = SqliteDatabase(database_path, pragmas={"foreign_keys": 1})
 
@@ -32,6 +32,18 @@ class BaseModel(Model):
         database = database
 
 
+class Source(BaseModel):
+    address = TextField(unique=True)
+    api = TextField()
+    key = TextField(null=True)
+
+
+class Subscription(BaseModel):
+    query = TextField()
+    source = ForeignKeyField(Source, backref="subscriptions")
+
+
+"""
 class Namespace(BaseModel):
     name = TextField(unique=True)
 
@@ -77,9 +89,7 @@ class Source(BaseModel):
     source_type = TextField()
 
 
-class Subscription(BaseModel):
-    source = ForeignKeyField(Source, backref="subscriptions")
-    query = TextField()
+
 
 
 class Post(BaseModel):
@@ -154,7 +164,7 @@ def get_file_path(hash, ext):
 class Log(BaseModel):
     action = TextField()
     data = JSONField()
-
+"""
 
 models = BaseModel.__subclasses__()
 database.create_tables(models)

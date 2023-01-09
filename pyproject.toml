@@ -21,6 +21,7 @@ hydrus-api = "^4.0.0"
 black = "^22.10.0"
 pyright = "^1.1.279"
 isort = "^5.10.1"
+neovim = "^0.3.1"
 
 [build-system]
 requires = ["poetry-core"]
