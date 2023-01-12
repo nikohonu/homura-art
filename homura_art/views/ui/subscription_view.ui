@@ -49,7 +49,11 @@
     </widget>
    </item>
    <item row="0" column="0" colspan="5">
-    <widget class="QTableView" name="view"/>
+    <widget class="QTableView" name="view">
+     <property name="selectionBehavior">
+      <enum>QAbstractItemView::SelectRows</enum>
+     </property>
+    </widget>
    </item>
    <item row="4" column="0" colspan="4">
     <widget class="QDialogButtonBox" name="button_box">

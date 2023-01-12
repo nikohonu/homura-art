@@ -33,8 +33,9 @@ class BaseModel(Model):
 
 
 class Source(BaseModel):
-    address = TextField(unique=True)
+    address = TextField(null=True)
     api = TextField()
+    login = TextField(null=True)
     key = TextField(null=True)
 
 
@@ -42,6 +43,40 @@ class Subscription(BaseModel):
     query = TextField()
     source = ForeignKeyField(Source, backref="subscriptions")
 
+
+class Post(BaseModel):
+    ext = TextField()
+    source = ForeignKeyField(Source)
+    post_id = IntegerField(null=False)
+    archived = BooleanField(default=False)
+
+
+class PostSubscription(BaseModel):
+    post = ForeignKeyField(Post)
+    subscription = ForeignKeyField(Subscription)
+
+    class Meta:
+        indexes = ((("post", "subscription"), True),)
+
+
+class TagType(BaseModel):
+    name = TextField()
+
+
+class Tag(BaseModel):
+    tag_type = ForeignKeyField(TagType)
+    name = TextField()
+
+
+class TagPost(BaseModel):
+    post = ForeignKeyField(Post)
+    tag = ForeignKeyField(Tag)
+
+    class Meta:
+        indexes = ((("post", "tag"), True),)
+
+
+# class Post()
 
 """
 class Namespace(BaseModel):
@@ -87,10 +122,6 @@ class Source(BaseModel):
     address = TextField(unique=True)
     key = TextField(null=True)
     source_type = TextField()
-
-
-
-
 
 class Post(BaseModel):
     source = ForeignKeyField(Source, backref="posts")

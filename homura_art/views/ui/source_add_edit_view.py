@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'source_add_edit_view.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.4.1
+## Created by: Qt User Interface Compiler version 6.4.2
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -23,18 +23,18 @@ class Ui_SourceAddEditView(object):
     def setupUi(self, SourceAddEditView):
         if not SourceAddEditView.objectName():
             SourceAddEditView.setObjectName(u"SourceAddEditView")
-        SourceAddEditView.resize(300, 150)
+        SourceAddEditView.resize(300, 183)
         self.gridLayout = QGridLayout(SourceAddEditView)
         self.gridLayout.setObjectName(u"gridLayout")
-        self.label_key = QLabel(SourceAddEditView)
-        self.label_key.setObjectName(u"label_key")
-
-        self.gridLayout.addWidget(self.label_key, 2, 0, 1, 1)
-
         self.label_api = QLabel(SourceAddEditView)
         self.label_api.setObjectName(u"label_api")
 
         self.gridLayout.addWidget(self.label_api, 1, 0, 1, 1)
+
+        self.edit_key = QLineEdit(SourceAddEditView)
+        self.edit_key.setObjectName(u"edit_key")
+
+        self.gridLayout.addWidget(self.edit_key, 3, 1, 1, 1)
 
         self.label_address = QLabel(SourceAddEditView)
         self.label_address.setObjectName(u"label_address")
@@ -46,10 +46,10 @@ class Ui_SourceAddEditView(object):
 
         self.gridLayout.addWidget(self.combo_box_api, 1, 1, 1, 1)
 
-        self.edit_key = QLineEdit(SourceAddEditView)
-        self.edit_key.setObjectName(u"edit_key")
+        self.label_key = QLabel(SourceAddEditView)
+        self.label_key.setObjectName(u"label_key")
 
-        self.gridLayout.addWidget(self.edit_key, 2, 1, 1, 1)
+        self.gridLayout.addWidget(self.label_key, 3, 0, 1, 1)
 
         self.edit_address = QLineEdit(SourceAddEditView)
         self.edit_address.setObjectName(u"edit_address")
@@ -61,11 +61,21 @@ class Ui_SourceAddEditView(object):
         self.button_box.setOrientation(Qt.Horizontal)
         self.button_box.setStandardButtons(QDialogButtonBox.Cancel|QDialogButtonBox.Ok)
 
-        self.gridLayout.addWidget(self.button_box, 4, 0, 1, 2)
+        self.gridLayout.addWidget(self.button_box, 5, 0, 1, 2)
 
         self.spacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
 
-        self.gridLayout.addItem(self.spacer, 3, 0, 1, 1)
+        self.gridLayout.addItem(self.spacer, 4, 0, 1, 1)
+
+        self.label_login = QLabel(SourceAddEditView)
+        self.label_login.setObjectName(u"label_login")
+
+        self.gridLayout.addWidget(self.label_login, 2, 0, 1, 1)
+
+        self.edit_login = QLineEdit(SourceAddEditView)
+        self.edit_login.setObjectName(u"edit_login")
+
+        self.gridLayout.addWidget(self.edit_login, 2, 1, 1, 1)
 
 
         self.retranslateUi(SourceAddEditView)
@@ -77,8 +87,9 @@ class Ui_SourceAddEditView(object):
 
     def retranslateUi(self, SourceAddEditView):
         SourceAddEditView.setWindowTitle(QCoreApplication.translate("SourceAddEditView", u"New source", None))
-        self.label_key.setText(QCoreApplication.translate("SourceAddEditView", u"Key:", None))
         self.label_api.setText(QCoreApplication.translate("SourceAddEditView", u"API:", None))
         self.label_address.setText(QCoreApplication.translate("SourceAddEditView", u"Address:", None))
+        self.label_key.setText(QCoreApplication.translate("SourceAddEditView", u"Key:", None))
+        self.label_login.setText(QCoreApplication.translate("SourceAddEditView", u"Login", None))
     # retranslateUi
 

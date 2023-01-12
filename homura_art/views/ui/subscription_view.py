@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'subscription_view.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.4.1
+## Created by: Qt User Interface Compiler version 6.4.2
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -16,9 +16,9 @@ from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient,
     QIcon, QImage, QKeySequence, QLinearGradient,
     QPainter, QPalette, QPixmap, QRadialGradient,
     QTransform)
-from PySide6.QtWidgets import (QAbstractButton, QApplication, QDialog, QDialogButtonBox,
-    QGridLayout, QHeaderView, QPushButton, QSizePolicy,
-    QSpacerItem, QTableView, QWidget)
+from PySide6.QtWidgets import (QAbstractButton, QAbstractItemView, QApplication, QDialog,
+    QDialogButtonBox, QGridLayout, QHeaderView, QPushButton,
+    QSizePolicy, QSpacerItem, QTableView, QWidget)
 
 class Ui_SubscriptionView(object):
     def setupUi(self, SubscriptionView):
@@ -54,6 +54,7 @@ class Ui_SubscriptionView(object):
 
         self.view = QTableView(SubscriptionView)
         self.view.setObjectName(u"view")
+        self.view.setSelectionBehavior(QAbstractItemView.SelectRows)
 
         self.gridLayout.addWidget(self.view, 0, 0, 1, 5)
 

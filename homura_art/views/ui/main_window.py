@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'main_window.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.4.1
+## Created by: Qt User Interface Compiler version 6.4.2
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -35,6 +35,8 @@ class Ui_MainWindow(object):
         self.action_options.setObjectName(u"action_options")
         self.action_import = QAction(MainWindow)
         self.action_import.setObjectName(u"action_import")
+        self.action_sync = QAction(MainWindow)
+        self.action_sync.setObjectName(u"action_sync")
         self.central_widget = QWidget(MainWindow)
         self.central_widget.setObjectName(u"central_widget")
         self.gridLayout = QGridLayout(self.central_widget)
@@ -61,6 +63,7 @@ class Ui_MainWindow(object):
         self.menu_bar.addAction(self.menu_subscriptions.menuAction())
         self.menu_subscriptions.addAction(self.action_manage_sources)
         self.menu_subscriptions.addAction(self.action_manage_subscriptions)
+        self.menu_subscriptions.addAction(self.action_sync)
         self.menu_file.addAction(self.action_import)
         self.menu_file.addSeparator()
         self.menu_file.addAction(self.action_options)
@@ -83,6 +86,7 @@ class Ui_MainWindow(object):
         self.action_manage_sources.setText(QCoreApplication.translate("MainWindow", u"Manage sources", None))
         self.action_options.setText(QCoreApplication.translate("MainWindow", u"Options", None))
         self.action_import.setText(QCoreApplication.translate("MainWindow", u"Import files", None))
+        self.action_sync.setText(QCoreApplication.translate("MainWindow", u"Sync", None))
         self.menu_subscriptions.setTitle(QCoreApplication.translate("MainWindow", u"Network", None))
         self.menu_file.setTitle(QCoreApplication.translate("MainWindow", u"File", None))
     # retranslateUi

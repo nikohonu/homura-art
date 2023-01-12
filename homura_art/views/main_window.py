@@ -1,5 +1,8 @@
+import asyncio
+
 from PySide6.QtWidgets import QMainWindow
 
+import homura_art.apis as apis
 from homura_art.database import Source, Subscription
 from homura_art.views.source_view import SourceView
 from homura_art.views.subscription_view import SubscriptionView
@@ -12,6 +15,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.setupUi(self)
         self.action_manage_sources.triggered.connect(self.manage_sources)
         self.action_manage_subscriptions.triggered.connect(self.manage_subscription)
+        self.action_sync.triggered.connect(self.sync)
 
     def manage_sources(self):
         sources = [
@@ -19,6 +23,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 "id": source.id,
                 "address": source.address,
                 "api": source.api,
+                "login": source.login,
                 "key": source.key,
             }
             for source in Source.select()
@@ -32,11 +37,16 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             source = Source.get_or_none(Source.id == s["id"])
             if not source:
                 source = Source.create(
-                    id=s["id"], address=s["address"], api=s["api"], key=s["key"]
+                    id=s["id"],
+                    address=s["address"],
+                    api=s["api"],
+                    login=s["login"],
+                    key=s["key"],
                 )
             else:
                 source.address = s["address"]
                 source.api = s["api"]
+                source.login = s["login"]
                 source.key = s["key"]
                 source.save()
 
@@ -66,3 +76,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 subscription.query = s["query"]
                 subscription.source = Source.get(Source.address == s["source"])
                 subscription.save()
+
+    def sync(self):
+        asyncio.run(apis.sync())

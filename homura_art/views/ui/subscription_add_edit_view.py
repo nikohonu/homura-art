@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'subscription_add_edit_view.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.4.1
+## Created by: Qt User Interface Compiler version 6.4.2
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################

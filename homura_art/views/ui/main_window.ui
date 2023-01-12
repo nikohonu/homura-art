@@ -35,6 +35,7 @@
     </property>
     <addaction name="action_manage_sources"/>
     <addaction name="action_manage_subscriptions"/>
+    <addaction name="action_sync"/>
    </widget>
    <widget class="QMenu" name="menu_file">
     <property name="title">
@@ -76,6 +77,11 @@
   <action name="action_import">
    <property name="text">
     <string>Import files</string>
+   </property>
+  </action>
+  <action name="action_sync">
+   <property name="text">
+    <string>Sync</string>
    </property>
   </action>
  </widget>

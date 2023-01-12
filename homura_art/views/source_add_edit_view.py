@@ -17,13 +17,18 @@ class SourceAddEditView(QDialog, Ui_SourceAddEditView):
         if source:
             self.edit_address.setText(source["address"])
             self.combo_box_api.setCurrentText(source["api"])
+            self.edit_login.setText(source["login"])
             self.edit_key.setText(source["key"])
             return source["id"]
 
     def result(self):
+        login = self.edit_login.text()
+        key = self.edit_key.text()
+        address = self.edit_address.text()
         return {
             "id": self.source_id,
-            "address": self.edit_address.text(),
+            "address": address if address else None, 
             "api": self.combo_box_api.currentText(),
-            "key": self.edit_key.text(),
+            "login": login if login else None,
+            "key": key if key else None,
         }

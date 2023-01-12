@@ -5,13 +5,13 @@ class SourceTableModel(QAbstractTableModel):
     def __init__(self, sources: list) -> None:
         super().__init__()
         self.sources = sources
-        self.headers = ["Id", "Address", "API", "Key"]
+        self.headers = ["Id", "Address", "API", "Login", "Key"]
 
     def rowCount(self, parent) -> int:
         return len(self.sources)
 
     def columnCount(self, parent) -> int:
-        return 4
+        return 5
 
     def data(self, index: QModelIndex, role):
         if role == Qt.ItemDataRole.DisplayRole:
