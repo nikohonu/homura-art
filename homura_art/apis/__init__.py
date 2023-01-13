@@ -26,7 +26,6 @@ async def sync_source(source, data: asyncio.Queue):
     print(source.api, "end")
 
 
-
 async def sync():
     data = asyncio.Queue()
     tasks = []
@@ -50,6 +49,7 @@ async def sync():
                 post_id=raw_post["id"],
                 created=raw_post["created"],
                 ext=raw_post["ext"],
+                url=raw_post["url"],
             )
             created = True
         PostSubscription.get_or_create(post=post, subscription=su)

@@ -1,10 +1,11 @@
 import datetime as dt
 import shutil
+import time
 from pathlib import Path
 
 import hydrus_api
+import requests
 from appdirs import user_data_dir
-from click import DateTime
 from peewee import (
     BooleanField,
     CompositeKey,
@@ -16,6 +17,7 @@ from peewee import (
     TextField,
     TimestampField,
 )
+from PIL import Image
 from playhouse.sqlite_ext import JSONField
 
 
@@ -23,9 +25,9 @@ def get_user_data_dir():
     return Path(user_data_dir("homura-art", "Niko Honu"))
 
 
-database_path = get_user_data_dir() / "database.db"
-database_path.parent.mkdir(parents=True, exist_ok=True)
-database = SqliteDatabase(database_path, pragmas={"foreign_keys": 1})
+database_dir = get_user_data_dir() / "database.db"
+database_dir.parent.mkdir(parents=True, exist_ok=True)
+database = SqliteDatabase(database_dir, pragmas={"foreign_keys": 1})
 
 
 class BaseModel(Model):
@@ -50,7 +52,39 @@ class Post(BaseModel):
     post_id = IntegerField()
     created = DateTimeField()
     ext = TextField()
+    url = TextField(null=True)
     filtred = BooleanField(default=False)
+
+    def get_image_path(self):
+        cache_dir = get_user_data_dir() / "cache" / str(self.source.id)
+        cache_dir.mkdir(parents=True, exist_ok=True)
+        path = cache_dir / (str(self.post_id) + "." + self.ext)
+        if path.exists():
+            return path
+
+    def get_thumbnail_path(self):
+        image_path = self.get_image_path()
+        thumbnail_dir = get_user_data_dir() / "thumbnail" / str(self.source.id)
+        thumbnail_dir.mkdir(parents=True, exist_ok=True)
+        path = thumbnail_dir / (str(self.post_id) + ".png")
+        if image_path.exists():
+            if not path.exists():
+                image = Image.open(image_path)
+                result_size = (103, 103)
+                image.thumbnail(result_size, Image.ANTIALIAS)
+                image = image.convert(mode="RGBA")
+                mode = image.mode
+                width, height = image.size
+                square_image = Image.new(mode, result_size, (0, 0, 0, 0))
+                square_image.paste(
+                    image,
+                    (
+                        result_size[0] // 2 - width // 2,
+                        result_size[1] // 2 - height // 2,
+                    ),
+                )
+                square_image.save(path)
+            return path
 
 
 class PostSubscription(BaseModel):

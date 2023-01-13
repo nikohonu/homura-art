@@ -2,6 +2,7 @@ import asyncio
 import shutil
 
 import booru
+from booru.client.danbooru import Booru
 from dateutil import parser
 from hydrus_api import requests
 
@@ -33,8 +34,8 @@ class Danbooru(API):
             "id": raw_post["id"],
             "created": parser.parse(raw_post["created_at"]),
             "ext": raw_post["file_ext"],
-            "tags": tags,
             "url": raw_post["file_url"],
+            "tags": tags,
         }
 
     async def search(self, query, page=0):
@@ -62,7 +63,11 @@ class Danbooru(API):
         result = []
         if need:
             while len(result) < need:
-                raw_result = await self.search(subscription.query, page)
+                try:
+                    raw_result = await self.search(subscription.query, page)
+                except Exception:
+                    print("No more file left")
+                    break
                 for post in raw_result:
                     if post["id"] not in existed_ids:
                         result.append(post)

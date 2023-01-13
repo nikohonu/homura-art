@@ -48,6 +48,7 @@ class Hydrus(API):
             "id": raw_post["file_id"],
             "created": created,
             "ext": raw_post["ext"][1:],
+            "url": None,
             "tags": tags,
         }
 

@@ -4,6 +4,7 @@ from PySide6.QtWidgets import QMainWindow
 
 import homura_art.apis as apis
 from homura_art.database import Source, Subscription
+from homura_art.views.inbox_tab import InboxTab
 from homura_art.views.source_view import SourceView
 from homura_art.views.subscription_view import SubscriptionView
 from homura_art.views.ui.main_window import Ui_MainWindow
@@ -16,6 +17,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.action_manage_sources.triggered.connect(self.manage_sources)
         self.action_manage_subscriptions.triggered.connect(self.manage_subscription)
         self.action_sync.triggered.connect(self.sync)
+        self.tab_widget.addTab(InboxTab(), "Inbox")
 
     def manage_sources(self):
         sources = [
@@ -55,7 +57,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             {
                 "id": subscription.id,
                 "query": subscription.query,
-                "source": subscription.source.address,
+                "source": subscription.source.id,
             }
             for subscription in Subscription.select().join(Source)
         ]
@@ -70,11 +72,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 subscription = Subscription.create(
                     id=s["id"],
                     query=s["query"],
-                    source=Source.get(Source.address == s["source"]),
+                    source=Source.get_by_id(s["source"]),
                 )
             else:
                 subscription.query = s["query"]
-                subscription.source = Source.get(Source.address == s["source"])
+                subscription.source = Source.get_by_id(s["source"])
                 subscription.save()
 
     def sync(self):
