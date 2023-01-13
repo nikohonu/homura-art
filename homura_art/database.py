@@ -4,6 +4,7 @@ from pathlib import Path
 
 import hydrus_api
 from appdirs import user_data_dir
+from click import DateTime
 from peewee import (
     BooleanField,
     CompositeKey,
@@ -45,10 +46,11 @@ class Subscription(BaseModel):
 
 
 class Post(BaseModel):
-    ext = TextField()
     source = ForeignKeyField(Source)
-    post_id = IntegerField(null=False)
-    archived = BooleanField(default=False)
+    post_id = IntegerField()
+    created = DateTimeField()
+    ext = TextField()
+    filtred = BooleanField(default=False)
 
 
 class PostSubscription(BaseModel):

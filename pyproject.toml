@@ -19,6 +19,7 @@ hydrus-api = "^4.0.0"
 booru = "^1.0.21"
 qasync = "^0.23.0"
 trio = "^0.22.0"
+dateutils = "^0.6.12"
 
 [tool.poetry.group.dev.dependencies]
 black = "^22.10.0"
