@@ -12,6 +12,7 @@ python = ">=3.10,<3.12"
 PySide6 = "^6.4.0.1"
 pillow-simd = "^9.0.0.post1"
 hydrus-api = "^4.0.0"
+appdirs = "^1.4.4"
 
 [tool.poetry.group.dev.dependencies]
 black = "^22.10.0"

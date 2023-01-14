@@ -2,8 +2,6 @@ from PIL import Image
 from PIL.ImageQt import ImageQt
 from PySide6.QtGui import QGuiApplication, QPixmap, QScreen
 
-from homura_art.model import File
-
 
 def calc_resize_by_height(old_size, height):
     old_width, old_height = old_size

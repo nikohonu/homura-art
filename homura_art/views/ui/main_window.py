@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'main_window.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.4.1
+## Created by: Qt User Interface Compiler version 6.4.2
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -11,13 +11,14 @@
 from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
     QMetaObject, QObject, QPoint, QRect,
     QSize, QTime, QUrl, Qt)
-from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
-    QFont, QFontDatabase, QGradient, QIcon,
-    QImage, QKeySequence, QLinearGradient, QPainter,
-    QPalette, QPixmap, QRadialGradient, QTransform)
+from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient,
+    QCursor, QFont, QFontDatabase, QGradient,
+    QIcon, QImage, QKeySequence, QLinearGradient,
+    QPainter, QPalette, QPixmap, QRadialGradient,
+    QTransform)
 from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QMainWindow,
-    QPushButton, QSizePolicy, QSpacerItem, QStatusBar,
-    QVBoxLayout, QWidget)
+    QMenu, QMenuBar, QPushButton, QSizePolicy,
+    QSpacerItem, QStatusBar, QVBoxLayout, QWidget)
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -25,6 +26,20 @@ class Ui_MainWindow(object):
             MainWindow.setObjectName(u"MainWindow")
         MainWindow.resize(1024, 768)
         MainWindow.setMinimumSize(QSize(1024, 768))
+        self.action_delete_left = QAction(MainWindow)
+        self.action_delete_left.setObjectName(u"action_delete_left")
+        self.action_delete_right = QAction(MainWindow)
+        self.action_delete_right.setObjectName(u"action_delete_right")
+        self.action_left_win = QAction(MainWindow)
+        self.action_left_win.setObjectName(u"action_left_win")
+        self.action_right_win = QAction(MainWindow)
+        self.action_right_win.setObjectName(u"action_right_win")
+        self.action_tie = QAction(MainWindow)
+        self.action_tie.setObjectName(u"action_tie")
+        self.action_collage = QAction(MainWindow)
+        self.action_collage.setObjectName(u"action_collage")
+        self.action_undo = QAction(MainWindow)
+        self.action_undo.setObjectName(u"action_undo")
         self.central_widget = QWidget(MainWindow)
         self.central_widget.setObjectName(u"central_widget")
         sizePolicy = QSizePolicy(QSizePolicy.Maximum, QSizePolicy.Preferred)
@@ -125,14 +140,85 @@ class Ui_MainWindow(object):
         self.status_bar = QStatusBar(MainWindow)
         self.status_bar.setObjectName(u"status_bar")
         MainWindow.setStatusBar(self.status_bar)
+        self.menuBar = QMenuBar(MainWindow)
+        self.menuBar.setObjectName(u"menuBar")
+        self.menuBar.setGeometry(QRect(0, 0, 1024, 30))
+        self.menuFile = QMenu(self.menuBar)
+        self.menuFile.setObjectName(u"menuFile")
+        MainWindow.setMenuBar(self.menuBar)
+
+        self.menuBar.addAction(self.menuFile.menuAction())
+        self.menuFile.addAction(self.action_delete_left)
+        self.menuFile.addAction(self.action_delete_right)
+        self.menuFile.addAction(self.action_left_win)
+        self.menuFile.addAction(self.action_right_win)
+        self.menuFile.addAction(self.action_tie)
+        self.menuFile.addAction(self.action_collage)
+        self.menuFile.addAction(self.action_undo)
 
         self.retranslateUi(MainWindow)
+        self.button_collage.clicked.connect(self.action_collage.trigger)
+        self.button_delete_left.clicked.connect(self.action_delete_left.trigger)
+        self.button_delete_right.clicked.connect(self.action_delete_right.trigger)
+        self.button_left_win.clicked.connect(self.action_left_win.trigger)
+        self.button_right_win.clicked.connect(self.action_right_win.trigger)
+        self.button_tie.clicked.connect(self.action_tie.trigger)
+        self.button_undo.clicked.connect(self.action_undo.trigger)
 
         QMetaObject.connectSlotsByName(MainWindow)
     # setupUi
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
+        self.action_delete_left.setText(QCoreApplication.translate("MainWindow", u"Delete left", None))
+#if QT_CONFIG(tooltip)
+        self.action_delete_left.setToolTip(QCoreApplication.translate("MainWindow", u"Delete left file", None))
+#endif // QT_CONFIG(tooltip)
+#if QT_CONFIG(shortcut)
+        self.action_delete_left.setShortcut(QCoreApplication.translate("MainWindow", u"Q", None))
+#endif // QT_CONFIG(shortcut)
+        self.action_delete_right.setText(QCoreApplication.translate("MainWindow", u"Delete right", None))
+#if QT_CONFIG(tooltip)
+        self.action_delete_right.setToolTip(QCoreApplication.translate("MainWindow", u"Delete right file", None))
+#endif // QT_CONFIG(tooltip)
+#if QT_CONFIG(shortcut)
+        self.action_delete_right.setShortcut(QCoreApplication.translate("MainWindow", u"E", None))
+#endif // QT_CONFIG(shortcut)
+        self.action_left_win.setText(QCoreApplication.translate("MainWindow", u"Left win", None))
+#if QT_CONFIG(tooltip)
+        self.action_left_win.setToolTip(QCoreApplication.translate("MainWindow", u"Left file win", None))
+#endif // QT_CONFIG(tooltip)
+#if QT_CONFIG(shortcut)
+        self.action_left_win.setShortcut(QCoreApplication.translate("MainWindow", u"A", None))
+#endif // QT_CONFIG(shortcut)
+        self.action_right_win.setText(QCoreApplication.translate("MainWindow", u"Right win", None))
+#if QT_CONFIG(tooltip)
+        self.action_right_win.setToolTip(QCoreApplication.translate("MainWindow", u"Right file win", None))
+#endif // QT_CONFIG(tooltip)
+#if QT_CONFIG(shortcut)
+        self.action_right_win.setShortcut(QCoreApplication.translate("MainWindow", u"D", None))
+#endif // QT_CONFIG(shortcut)
+        self.action_tie.setText(QCoreApplication.translate("MainWindow", u"Tie", None))
+#if QT_CONFIG(tooltip)
+        self.action_tie.setToolTip(QCoreApplication.translate("MainWindow", u"A tie between files", None))
+#endif // QT_CONFIG(tooltip)
+#if QT_CONFIG(shortcut)
+        self.action_tie.setShortcut(QCoreApplication.translate("MainWindow", u"W", None))
+#endif // QT_CONFIG(shortcut)
+        self.action_collage.setText(QCoreApplication.translate("MainWindow", u"Collage", None))
+#if QT_CONFIG(tooltip)
+        self.action_collage.setToolTip(QCoreApplication.translate("MainWindow", u"Show collage", None))
+#endif // QT_CONFIG(tooltip)
+#if QT_CONFIG(shortcut)
+        self.action_collage.setShortcut(QCoreApplication.translate("MainWindow", u"S", None))
+#endif // QT_CONFIG(shortcut)
+        self.action_undo.setText(QCoreApplication.translate("MainWindow", u"Undo", None))
+#if QT_CONFIG(tooltip)
+        self.action_undo.setToolTip(QCoreApplication.translate("MainWindow", u"Undo last action", None))
+#endif // QT_CONFIG(tooltip)
+#if QT_CONFIG(shortcut)
+        self.action_undo.setShortcut(QCoreApplication.translate("MainWindow", u"Space", None))
+#endif // QT_CONFIG(shortcut)
         self.file.setText(QCoreApplication.translate("MainWindow", u"File", None))
         self.button_delete_left.setText(QCoreApplication.translate("MainWindow", u"Delete (Q)", None))
         self.button_left_win.setText(QCoreApplication.translate("MainWindow", u"Left win (A)", None))
@@ -141,5 +227,6 @@ class Ui_MainWindow(object):
         self.button_delete_right.setText(QCoreApplication.translate("MainWindow", u"Delete (E)", None))
         self.button_collage.setText(QCoreApplication.translate("MainWindow", u"Collage (S)", None))
         self.button_undo.setText(QCoreApplication.translate("MainWindow", u"Undo (Space)", None))
+        self.menuFile.setTitle(QCoreApplication.translate("MainWindow", u"File", None))
     # retranslateUi
 
