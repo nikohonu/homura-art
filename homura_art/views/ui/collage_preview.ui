@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>CollagePreview</class>
- <widget class="QDialog" name="CollagePreview">
+ <class>CollageDialog</class>
+ <widget class="QDialog" name="CollageDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -48,27 +48,6 @@
       <number>6</number>
      </property>
      <item>
-      <widget class="QPushButton" name="button_1">
-       <property name="text">
-        <string>First is safe (1)</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="button_2">
-       <property name="text">
-        <string>Second is safe (2)</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="button_3">
-       <property name="text">
-        <string>Third is safe (3)</string>
-       </property>
-      </widget>
-     </item>
-     <item>
       <widget class="QDialogButtonBox" name="button_box">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
@@ -88,13 +67,24 @@
     </layout>
    </item>
   </layout>
+  <action name="action_next">
+   <property name="text">
+    <string>Next</string>
+   </property>
+   <property name="toolTip">
+    <string>Next collage</string>
+   </property>
+   <property name="shortcut">
+    <string>S</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections>
   <connection>
    <sender>button_box</sender>
    <signal>rejected()</signal>
-   <receiver>CollagePreview</receiver>
+   <receiver>CollageDialog</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -110,7 +100,7 @@
   <connection>
    <sender>button_box</sender>
    <signal>accepted()</signal>
-   <receiver>CollagePreview</receiver>
+   <receiver>CollageDialog</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -120,6 +110,22 @@
     <hint type="destinationlabel">
      <x>157</x>
      <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>button_next</sender>
+   <signal>clicked()</signal>
+   <receiver>action_next</receiver>
+   <slot>trigger()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1231</x>
+     <y>743</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-1</x>
+     <y>-1</y>
     </hint>
    </hints>
   </connection>

@@ -11,23 +11,26 @@
 from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
     QMetaObject, QObject, QPoint, QRect,
     QSize, QTime, QUrl, Qt)
-from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
-    QFont, QFontDatabase, QGradient, QIcon,
-    QImage, QKeySequence, QLinearGradient, QPainter,
-    QPalette, QPixmap, QRadialGradient, QTransform)
+from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient,
+    QCursor, QFont, QFontDatabase, QGradient,
+    QIcon, QImage, QKeySequence, QLinearGradient,
+    QPainter, QPalette, QPixmap, QRadialGradient,
+    QTransform)
 from PySide6.QtWidgets import (QAbstractButton, QApplication, QDialog, QDialogButtonBox,
     QHBoxLayout, QLabel, QPushButton, QSizePolicy,
     QVBoxLayout, QWidget)
 
-class Ui_CollagePreview(object):
-    def setupUi(self, CollagePreview):
-        if not CollagePreview.objectName():
-            CollagePreview.setObjectName(u"CollagePreview")
-        CollagePreview.resize(1280, 768)
-        self.verticalLayout = QVBoxLayout(CollagePreview)
+class Ui_CollageDialog(object):
+    def setupUi(self, CollageDialog):
+        if not CollageDialog.objectName():
+            CollageDialog.setObjectName(u"CollageDialog")
+        CollageDialog.resize(1280, 768)
+        self.action_next = QAction(CollageDialog)
+        self.action_next.setObjectName(u"action_next")
+        self.verticalLayout = QVBoxLayout(CollageDialog)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.verticalLayout.setContentsMargins(0, 0, 0, -1)
-        self.file = QLabel(CollagePreview)
+        self.file = QLabel(CollageDialog)
         self.file.setObjectName(u"file")
         self.file.setMinimumSize(QSize(1280, 720))
         self.file.setAlignment(Qt.AlignCenter)
@@ -37,29 +40,14 @@ class Ui_CollagePreview(object):
         self.horizontalLayout = QHBoxLayout()
         self.horizontalLayout.setObjectName(u"horizontalLayout")
         self.horizontalLayout.setContentsMargins(6, -1, 6, -1)
-        self.button_1 = QPushButton(CollagePreview)
-        self.button_1.setObjectName(u"button_1")
-
-        self.horizontalLayout.addWidget(self.button_1)
-
-        self.button_2 = QPushButton(CollagePreview)
-        self.button_2.setObjectName(u"button_2")
-
-        self.horizontalLayout.addWidget(self.button_2)
-
-        self.button_3 = QPushButton(CollagePreview)
-        self.button_3.setObjectName(u"button_3")
-
-        self.horizontalLayout.addWidget(self.button_3)
-
-        self.button_box = QDialogButtonBox(CollagePreview)
+        self.button_box = QDialogButtonBox(CollageDialog)
         self.button_box.setObjectName(u"button_box")
         self.button_box.setOrientation(Qt.Horizontal)
         self.button_box.setStandardButtons(QDialogButtonBox.Cancel|QDialogButtonBox.Ok)
 
         self.horizontalLayout.addWidget(self.button_box)
 
-        self.button_next = QPushButton(CollagePreview)
+        self.button_next = QPushButton(CollageDialog)
         self.button_next.setObjectName(u"button_next")
 
         self.horizontalLayout.addWidget(self.button_next)
@@ -68,19 +56,24 @@ class Ui_CollagePreview(object):
         self.verticalLayout.addLayout(self.horizontalLayout)
 
 
-        self.retranslateUi(CollagePreview)
-        self.button_box.rejected.connect(CollagePreview.reject)
-        self.button_box.accepted.connect(CollagePreview.accept)
+        self.retranslateUi(CollageDialog)
+        self.button_box.rejected.connect(CollageDialog.reject)
+        self.button_box.accepted.connect(CollageDialog.accept)
+        self.button_next.clicked.connect(self.action_next.trigger)
 
-        QMetaObject.connectSlotsByName(CollagePreview)
+        QMetaObject.connectSlotsByName(CollageDialog)
     # setupUi
 
-    def retranslateUi(self, CollagePreview):
-        CollagePreview.setWindowTitle(QCoreApplication.translate("CollagePreview", u"Dialog", None))
-        self.file.setText(QCoreApplication.translate("CollagePreview", u"TextLabel", None))
-        self.button_1.setText(QCoreApplication.translate("CollagePreview", u"First is safe (1)", None))
-        self.button_2.setText(QCoreApplication.translate("CollagePreview", u"Second is safe (2)", None))
-        self.button_3.setText(QCoreApplication.translate("CollagePreview", u"Third is safe (3)", None))
-        self.button_next.setText(QCoreApplication.translate("CollagePreview", u"Next (S)", None))
+    def retranslateUi(self, CollageDialog):
+        CollageDialog.setWindowTitle(QCoreApplication.translate("CollageDialog", u"Dialog", None))
+        self.action_next.setText(QCoreApplication.translate("CollageDialog", u"Next", None))
+#if QT_CONFIG(tooltip)
+        self.action_next.setToolTip(QCoreApplication.translate("CollageDialog", u"Next collage", None))
+#endif // QT_CONFIG(tooltip)
+#if QT_CONFIG(shortcut)
+        self.action_next.setShortcut(QCoreApplication.translate("CollageDialog", u"S", None))
+#endif // QT_CONFIG(shortcut)
+        self.file.setText(QCoreApplication.translate("CollageDialog", u"TextLabel", None))
+        self.button_next.setText(QCoreApplication.translate("CollageDialog", u"Next (S)", None))
     # retranslateUi
 

@@ -17,6 +17,7 @@ from PySide6.QtGui import (
 from PySide6.QtWidgets import QMainWindow
 
 from homura_art.image import make_collage
+from homura_art.views.collage_dialog import CollageDialog
 from homura_art.views.key_dialog import KeyDialog
 from homura_art.views.ui.main_window import Ui_MainWindow
 
@@ -37,7 +38,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.action_delete_right.triggered.connect(self.delete_right)
         self.action_left_win.triggered.connect(lambda: self.win(1))
         self.action_right_win.triggered.connect(lambda: self.win(0))
-        self.action_tie.triggered.connect(lambda: self.win(0.5))
+        self.action_collage.triggered.connect(self.open_collage)
 
     def load_config(self):
         config_dir = Path(user_config_dir("homura-art", "Niko Honu"))
@@ -76,7 +77,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             print(tags)
             elo = 0
             ext = file_with_elo["ext"]
-            for tag in tags['0']:
+            for tag in tags["0"]:
                 if tag.startswith("elo:"):
                     elo = int(tag.split(":")[1])
                     print(elo)
@@ -176,7 +177,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 }
             },
         )
-        print("fuck")
         file[1] = new_elo
         return file
 
@@ -202,3 +202,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.left = self.queue.pop()
         self.right = self.queue.pop()
         self.update_images()
+
+    def open_collage(self):
+        CollageDialog(self.client).exec()
